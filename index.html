@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMT-P Emergency Medication Handbook | 高級救護技術員急救藥物手冊</title>
+  <meta name="description" content="專為台灣高級救護技術員 (EMT-P) 設計的緊急急救藥物電子書與即時劑量計算系統，符合 ACLS 2020 規範。">
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div>
+        <div class="logo-container">
+          <div class="logo-icon">
+            <i class="fa-solid fa-star-of-life"></i>
+          </div>
+          <div class="logo-text">
+            <h1>EMT-P 藥物手冊</h1>
+            <span>救護臨床決策系統</span>
+          </div>
+        </div>
+        
+        <nav>
+          <ul class="nav-menu">
+            <li class="nav-item active" data-target="ebook-section">
+              <button><i class="fa-solid fa-book-medical"></i> <span>藥物電子書</span></button>
+            </li>
+            <li class="nav-item" data-target="calc-section">
+              <button><i class="fa-solid fa-calculator"></i> <span>劑量計算機</span></button>
+            </li>
+            <li class="nav-item" data-target="protocols-section">
+              <button><i class="fa-solid fa-diagram-project"></i> <span>急救流程對照</span></button>
+            </li>
+            <li class="nav-item" data-target="quiz-section">
+              <button><i class="fa-solid fa-graduation-cap"></i> <span>藥理自我挑戰</span></button>
+            </li>
+            <li class="nav-item" data-target="bookmarks-section">
+              <button><i class="fa-solid fa-bookmark"></i> <span>書籤與臨床筆記</span></button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle-btn" id="theme-toggle">
+          <i class="fa-solid fa-sun"></i> <span>切換主題</span>
+        </button>
+        <button class="disclaimer-btn" id="open-disclaimer-btn">免責聲明</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-bar">
+        <h2 id="page-title">藥物電子書</h2>
+        
+        <!-- Live Search Input -->
+        <div class="search-container" id="global-search-container">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" class="search-input" placeholder="搜尋英文/中文名、商品名...">
+        </div>
+      </header>
+
+      <!-- Content Views Wrapper -->
+      <div class="content-wrapper">
+        
+        <!-- ==================== PAGE 1: E-BOOK ==================== -->
+        <section id="ebook-section" class="page-section active">
+          <!-- Quick filters -->
+          <div class="filters-container" id="category-filters">
+            <button class="filter-pill active" data-category="all">全部藥物</button>
+            <button class="filter-pill" data-category="vasopressor">強心升壓劑</button>
+            <button class="filter-pill" data-category="antiarrhythmic">抗心律不整</button>
+            <button class="filter-pill" data-category="analgesic">鎮痛劑</button>
+            <button class="filter-pill" data-category="sedative">鎮靜劑</button>
+            <button class="filter-pill" data-category="electrolyte">電解質/酸鹼</button>
+            <button class="filter-pill" data-category="hemostatic">止血/其他</button>
+          </div>
+
+          <!-- Grid of drug cards -->
+          <div class="drug-grid" id="drug-list">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </section>
+
+        <!-- ==================== PAGE 2: DOSAGE CALCULATOR ==================== -->
+        <section id="calc-section" class="page-section">
+          <div class="calc-layout">
+            <!-- Left Side Inputs -->
+            <div class="calc-inputs-card">
+              <h3 style="margin-bottom: 20px; font-weight: 700; color: var(--color-primary);">計算參數輸入</h3>
+              
+              <!-- Patient Type Switch -->
+              <div class="btn-tabs">
+                <button class="tab-btn active" id="calc-tab-adult">成人</button>
+                <button class="tab-btn" id="calc-tab-pediatric">兒科 (Pediatric)</button>
+              </div>
+
+              <!-- Age Select (For Pediatric only) -->
+              <div class="calc-group" id="pediatric-age-group" style="display: none;">
+                <label for="ped-age">估算兒科年齡</label>
+                <select id="ped-age">
+                  <option value="">-- 選擇年齡 (自動估算體重) --</option>
+                  <option value="1">1 歲 (約 10 kg)</option>
+                  <option value="2">2 歲 (約 12 kg)</option>
+                  <option value="3">3 歲 (約 14 kg)</option>
+                  <option value="4">4 歲 (約 16 kg)</option>
+                  <option value="5">5 歲 (約 18 kg)</option>
+                  <option value="6">6 歲 (約 20 kg)</option>
+                  <option value="7">7 歲 (約 22 kg)</option>
+                  <option value="8">8 歲 (約 24 kg)</option>
+                  <option value="9">9 歲 (約 26 kg)</option>
+                  <option value="10">10 歲 (約 28 kg)</option>
+                </select>
+              </div>
+
+              <!-- Weight Input -->
+              <div class="calc-group">
+                <label for="patient-weight">患者體重</label>
+                <div class="input-with-unit">
+                  <input type="number" id="patient-weight" placeholder="輸入體重..." min="1" max="250" value="70">
+                  <span class="input-unit">kg</span>
+                </div>
+              </div>
+
+              <!-- Drug Selector -->
+              <div class="calc-group">
+                <label for="calc-drug-select">選擇給藥品種</label>
+                <select id="calc-drug-select">
+                  <option value="">-- 請選擇藥物 --</option>
+                  <!-- Dynamically populated by app.js -->
+                </select>
+              </div>
+
+              <!-- Extra parameter inputs like infusion dose -->
+              <div class="calc-group" id="infusion-rate-group" style="display: none;">
+                <label for="infusion-dose-rate" id="infusion-dose-label">給藥劑量速率</label>
+                <div class="input-with-unit">
+                  <input type="number" id="infusion-dose-rate" min="0.1" step="0.1">
+                  <span class="input-unit" id="infusion-dose-unit">mcg/min</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side Results -->
+            <div class="calc-results-card">
+              <div id="calc-results-placeholder" class="empty-results">
+                <i class="fa-solid fa-calculator-combined"></i>
+                <p>請於左側輸入患者體重，並選擇要計算的急救藥物以生成結果。</p>
+              </div>
+
+              <div id="calc-results-display" style="display: none; height: 100%;">
+                <div class="results-header">
+                  <h3 id="calc-res-drug-name">Epinephrine 腎上腺素</h3>
+                  <span id="calc-res-brand" class="brand-label">商品名: Bosmin</span>
+                </div>
+                
+                <div class="results-body">
+                  <!-- Patient Weight -->
+                  <div class="result-item">
+                    <span class="result-label">設定患者體重</span>
+                    <span class="result-value" id="calc-res-weight">70 kg</span>
+                  </div>
+                  
+                  <!-- Target Dose -->
+                  <div class="result-item">
+                    <span class="result-label">常規推薦給藥劑量</span>
+                    <span class="result-value" id="calc-res-target-dose">-</span>
+                  </div>
+
+                  <!-- Calculated Bolus Volume or Drop Rate -->
+                  <div class="result-item" id="calc-res-volume-item">
+                    <span class="result-label" id="calc-res-volume-label">給藥容積</span>
+                    <span class="result-value" id="calc-res-volume">-</span>
+                  </div>
+
+                  <!-- Preparation instructions -->
+                  <div class="result-item" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                    <span class="result-label">臨床稀釋配製指引</span>
+                    <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-primary);" id="calc-res-prep">--</p>
+                  </div>
+                </div>
+                
+                <div class="calc-disclaimer">
+                  <i class="fa-solid fa-triangle-exclamation"></i> <strong>計算警告:</strong> 滴數計算基於精密微量套（60 gtt/mL）進行估算。臨床給藥必須嚴密監測心電圖、脈搏血氧及血壓，並核對醫囑。
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== PAGE 3: PROTOCOLS ==================== -->
+        <section id="protocols-section" class="page-section">
+          <div class="protocol-container">
+            <div class="protocol-selector">
+              <button class="filter-pill active" id="proto-btn-acls">ACLS 致命心律演算法</button>
+              <button class="filter-pill" id="proto-btn-brady">心搏過緩演算法</button>
+            </div>
+
+            <!-- ACLS Cardiac Arrest Flowchart -->
+            <div class="protocol-card" id="proto-acls-card">
+              <div class="protocol-header">
+                <h3>ACLS 致命心律 (VF/pVT/PEA/Asystole) 處置對照</h3>
+                <p>點擊藍色連結藥物，可立即查閱詳細的說明書與稀釋方法。</p>
+              </div>
+
+              <div class="protocol-flowchart">
+                <div class="flow-node">
+                  <div class="node-title">發現 OHCA / CPR 啟動</div>
+                  <div class="node-desc">給予氧氣、連接心電圖去顫器</div>
+                </div>
+                
+                <div class="flow-connector"></div>
+
+                <div class="flow-node">
+                  <div class="node-title">分析心律：是否可電擊？</div>
+                  <div class="node-desc">VF / 無脈搏 VT (Shockable) 或 Asystole / PEA (Non-shockable)</div>
+                </div>
+
+                <div class="flow-connector"></div>
+
+                <div class="flow-node highlight">
+                  <div class="node-title">進入給藥時機</div>
+                  <div class="node-desc">
+                    所有 OHCA 每 3-5 分鐘給予一次 <span class="drug-link" onclick="app.showDrugDetail('epinephrine')">Epinephrine (1 mg)</span>
+                  </div>
+                </div>
+
+                <div class="flow-connector"></div>
+
+                <div class="flow-node">
+                  <div class="node-title">若為 VF/pVT 持續 (電擊 3 次後)</div>
+                  <div class="node-desc">
+                    首選抗心律不整藥：<span class="drug-link" onclick="app.showDrugDetail('amiodarone')">Amiodarone (首劑 300 mg / 次劑 150 mg)</span>
+                    <br>或使用替代藥物：<span class="drug-link" onclick="app.showDrugDetail('lidocaine')">Lidocaine (1.0 - 1.5 mg/kg)</span>
+                  </div>
+                </div>
+
+                <div class="flow-connector"></div>
+
+                <div class="flow-node">
+                  <div class="node-title">特殊情況排除</div>
+                  <div class="node-desc">
+                    尖端扭轉型室速 (TdP) 給予 <span class="drug-link" onclick="app.showDrugDetail('magnesium_sulfate')">Magnesium Sulfate (1-2 g)</span>
+                    <br>酸血症/高血鉀給予 <span class="drug-link" onclick="app.showDrugDetail('sodium_bicarb')">NaHCO3 (1 mEq/kg)</span>
+                    <br>低血糖症給予 <span class="drug-link" onclick="app.showDrugDetail('glucose')">D50W (20-50 mL)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bradycardia Flowchart -->
+            <div class="protocol-card" id="proto-brady-card" style="display: none;">
+              <div class="protocol-header">
+                <h3>成人症狀性心搏過緩演算法對照</h3>
+                <p>HR < 50 bpm 且伴隨低血壓、休克、胸痛或心衰竭之臨床步驟。</p>
+              </div>
+
+              <div class="protocol-flowchart">
+                <div class="flow-node">
+                  <div class="node-title">評估臨床症狀</div>
+                  <div class="node-desc">維持氣道、給予氧氣監測、心電圖及血壓</div>
+                </div>
+                
+                <div class="flow-connector"></div>
+
+                <div class="flow-node">
+                  <div class="node-title">是否有血液動力學不穩定？</div>
+                  <div class="node-desc">低血壓、急性神智改變、休克徵象、缺血性胸痛、急性心衰竭</div>
+                </div>
+
+                <div class="flow-connector"></div>
+
+                <div class="flow-node highlight">
+                  <div class="node-title">第一線給藥處置</div>
+                  <div class="node-desc">
+                    給予首劑抗膽鹼藥物：<span class="drug-link" onclick="app.showDrugDetail('atropine')">Atropine (1 mg IV)</span>，可每 3-5 分鐘重複，最大累積 3 mg。
+                  </div>
+                </div>
+
+                <div class="flow-connector"></div>
+
+                <div class="flow-node">
+                  <div class="node-title">若 Atropine 無效</div>
+                  <div class="node-desc">
+                    啟動經皮節律器 (TCP) 或
+                    <br>靜脈滴注：<span class="drug-link" onclick="app.showDrugDetail('dopamine')">Dopamine 輸注 (5-20 mcg/kg/min)</span>
+                    <br>或使用：<span class="drug-link" onclick="app.showDrugDetail('epinephrine')">Epinephrine 輸注 (2-10 mcg/min)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== PAGE 4: QUIZ ==================== -->
+        <section id="quiz-section" class="page-section">
+          <div class="quiz-container">
+            <div class="quiz-card">
+              
+              <!-- Quiz Start Screen -->
+              <div id="quiz-start-screen" class="quiz-intro">
+                <i class="fa-solid fa-file-medical-asterisk animate-pulse"></i>
+                <h3>EMT-P 救護藥理知識挑戰</h3>
+                <p>本測驗將隨機抽取 10 題關於急救藥物適應症、成人與兒科劑量、禁忌症與稀釋方法的單選題，供您自我檢驗急救應變能力。</p>
+                <button class="start-quiz-btn" id="start-quiz-btn">開始挑戰</button>
+              </div>
+
+              <!-- Quiz Game Playing -->
+              <div id="quiz-play-screen" class="quiz-play" style="display: none;">
+                <div class="quiz-progress">
+                  <span>問題 <strong id="quiz-current-num">1</strong> / 10</span>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="quiz-progress-fill"></div>
+                  </div>
+                  <span>分數: <strong id="quiz-current-score">0</strong></span>
+                </div>
+                
+                <div class="quiz-question" id="quiz-question-text">
+                  藥物 Epinephrine (Bosmin) 用於過敏性休克 (Anaphylaxis) 的成人 IM 肌肉注射常規劑量為何？
+                </div>
+
+                <div class="quiz-options" id="quiz-options-container">
+                  <!-- Dynamically populated options buttons -->
+                </div>
+
+                <div class="quiz-feedback" id="quiz-feedback-box" style="display: none;">
+                  <strong>答案解析：</strong><span id="quiz-feedback-text">--</span>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                  <button class="next-quiz-btn" id="next-quiz-btn" style="display: none;">下一題 <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+              </div>
+
+              <!-- Quiz Result Screen -->
+              <div id="quiz-result-screen" class="quiz-score-card" style="display: none;">
+                <i class="fa-solid fa-trophy"></i>
+                <h3>挑戰完成！</h3>
+                <div class="score-display"><span id="quiz-final-score">80</span>/100</div>
+                <p class="score-message" id="quiz-final-message">表現優異！您對 EMT-P 藥物有非常深刻的理解，能在臨床救護中做出精確的決策！</p>
+                <button class="start-quiz-btn" id="restart-quiz-btn">重新挑戰</button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== PAGE 5: BOOKMARKS & NOTES ==================== -->
+        <section id="bookmarks-section" class="page-section">
+          <h3 style="margin-bottom: 24px; font-weight: 700; color: var(--color-primary);">已收藏之藥物</h3>
+          <div class="drug-grid" id="bookmarked-drugs-list">
+            <!-- Dynamically populated marked drugs -->
+          </div>
+
+          <div id="bookmarks-empty-view" class="bookmarks-empty" style="display: none;">
+            <i class="fa-regular fa-folder-open"></i>
+            <p>目前沒有收藏的藥物。您可以在「藥物電子書」頁面點擊藥物卡片下方的星星圖示來加入收藏。</p>
+          </div>
+
+          <h3 style="margin-top: 40px; margin-bottom: 20px; font-weight: 700; color: var(--color-primary);">已儲存的臨床心得與備忘錄</h3>
+          <div class="notes-list" id="saved-notes-list">
+            <!-- Dynamically populated notes -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ==================== DRUG DETAIL MODAL ==================== -->
+  <div class="modal-overlay" id="drug-detail-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3 id="modal-drug-title">Epinephrine <span id="modal-drug-zh">腎上腺素</span></h3>
+          <p id="modal-drug-brand">商品名：Bosmin</p>
+        </div>
+        <button class="close-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Category & High Alert Badge -->
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <span class="card-tag" id="modal-drug-category">強心升壓劑</span>
+          <span class="alert-badge" id="modal-drug-alert">高警訊藥物 (High Alert)</span>
+        </div>
+
+        <!-- Mechanism -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-gears"></i> 藥理機轉</h4>
+          <div class="info-content" id="modal-drug-mechanism">--</div>
+        </div>
+
+        <!-- Indications -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-check-double"></i> 臨床適應症</h4>
+          <ul class="info-list" id="modal-drug-indications">
+            <!-- List elements -->
+          </ul>
+        </div>
+
+        <!-- Contraindications -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-ban"></i> 禁忌症</h4>
+          <ul class="info-list" id="modal-drug-contraindications">
+            <!-- List elements -->
+          </ul>
+        </div>
+
+        <!-- Adult Dosage -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-user"></i> 成人給藥劑量與途徑</h4>
+          <div class="info-content" id="modal-drug-adult">--</div>
+        </div>
+
+        <!-- Pediatric Dosage -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-child"></i> 兒科給藥劑量與途徑</h4>
+          <div class="info-content" id="modal-drug-pediatric">--</div>
+        </div>
+
+        <!-- Dilution Preparation -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-vial"></i> 配製與稀釋方法</h4>
+          <div class="info-content" id="modal-drug-prep">--</div>
+        </div>
+
+        <!-- Precautions -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-triangle-exclamation"></i> 注意事項</h4>
+          <ul class="info-list" id="modal-drug-precautions">
+            <!-- List elements -->
+          </ul>
+        </div>
+
+        <!-- Interactive Paramedic Notes -->
+        <div class="info-section" style="border-top: 1px solid var(--border-color); padding-top: 24px;">
+          <h4><i class="fa-solid fa-pen-to-square"></i> 我的臨床備忘錄 / 協定筆記</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">在此處寫下的臨床提醒或本地協定（如「台北市預立醫療規定」），將自動保存在此裝置中。</p>
+          <textarea class="notes-area" id="modal-notes-area" placeholder="在此處輸入筆記..."></textarea>
+          <button class="save-notes-btn" id="save-notes-btn"><i class="fa-solid fa-floppy-disk"></i> 儲存筆記</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MEDICAL DISCLAIMER MODAL ==================== -->
+  <div class="modal-overlay" id="disclaimer-modal">
+    <div class="modal-container" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3><i class="fa-solid fa-shield-halved" style="color: var(--color-warning);"></i> 救護免責聲明</h3>
+        </div>
+        <button class="close-btn" id="close-disclaimer-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" style="padding: 24px; text-align: justify; line-height: 1.6; font-size: 0.95rem;">
+        <p>1. 本電子書之所有內容（包含藥物資訊、劑量公式、稀釋計算器及測驗）<strong>僅供學術教育、個人複習與研究參考之用</strong>，不構成臨床診療指引或醫學處置建議。</p>
+        <br>
+        <p>2. 高級救護技術員 (EMT-P) 於實際院前緊急救護現場執行給藥前，應遵照<strong>各地方衛生局核准之預立醫療醫囑、當地緊急救護工作守則，或直接聯絡醫療指導醫師 (Online Medical Control)</strong> 指示執行。</p>
+        <br>
+        <p>3. 臨床用藥情況千變萬化，任何因使用本系統之計算數值而引發的給藥誤差或醫療糾紛，本系統之開發團隊概不承擔任何相關法律責任。</p>
+        <br>
+        <button class="start-quiz-btn" id="accept-disclaimer-btn" style="width: 100%;">我已閱讀並同意此條款</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check" style="color: var(--color-success); font-size: 1.2rem;"></i>
+    <div class="toast-message" id="toast-message">筆記儲存成功！</div>
+  </div>
+
+  <!-- Load Medication Database -->
+  <script src="data.js"></script>
+  <!-- Load Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
