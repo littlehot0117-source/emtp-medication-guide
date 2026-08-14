@@ -17,6 +17,11 @@ const app = {
       currentIndex: 0,
       score: 0,
       selectedAnswerIndex: null
+    },
+    wizard: {
+      protocolId: "anaphylaxis",
+      currentStepIndex: 0,
+      history: []
     }
   },
 
@@ -813,26 +818,300 @@ const app = {
     }
   },
 
-  // ==================== 急救流程圖控制 ====================
+  // ==================== 流程精靈資料庫 ====================
+  protocolsData: {
+    anaphylaxis: {
+      title: "成人致命性過敏傷病患救護流程",
+      subtitle: "嘉義縣消防局緊急醫療救護協定對照",
+      steps: [
+        {
+          label: "步驟 1: 初步評估",
+          question: "出現過敏反應經初步評估並詢問病史，患者是否有下列任一狀況？",
+          desc: "1. 有嚴重呼吸道腫脹症狀 (如血管水腫、喉部水腫、聲音沙啞、喘鳴、哮喘)<br>2. 有休克症狀 (如意識不清、低血壓、臉色蒼白、冷汗、CRT > 2秒)",
+          choices: [
+            { text: "是 (符合上述狀況之一)", nextStep: 1 },
+            { text: "否 (完全無上述狀況)", nextStep: 5 }
+          ],
+          guidelines: "<strong>【要旨說明】</strong><br>1. 非創傷傷病患者主訴出現過敏反應者，適用此流程。<br>2. 若為注射(含叮咬)造成之過敏性休克致死案例，多在數分鐘至 1 小時內發生；食物造成的嚴重過敏致死多發生在半小時至 4 小時內；6 小時後並沒有死亡案例。所以第一線 EMS/急診的處理非常重要。<br><strong>【註1: 典型的過敏性反應】</strong><br>通常侵犯皮膚、呼吸、心臟血管或腸胃系統中的兩個以上，且在暴露於過敏源後很快發生。類過敏反應不是由 IgE 引起，但與過敏反應有相似臨床症候。<br><strong>【註2: 嚴重呼吸道腫脹症狀】</strong><br>• 血管水腫：眼瞼、臉或嘴唇腫脹，如口咽部腫脹或舌頭水腫。<br>• 上呼吸道水腫：聲音沙啞或喘鳴 (stridor)。<br>• 下呼吸道水腫 (氣喘)：哮喘 (wheezing)。<br><strong>【註3: 心臟血管系統侵犯】</strong><br>血管擴張造成相對性低血容，微血管通透性增加，嚴重時表現為暈厥、心悸、低血壓或休克 (如意識不清、臉色蒼白、四肢濕冷、呼吸淺快、心搏過速、微血管充填時間 > 2 秒)。"
+        },
+        {
+          label: "步驟 2: 心臟停止評估",
+          question: "評估患者目前是否已心臟停止？",
+          desc: "檢查是否有自主意識、呼吸與大動脈搏動。",
+          choices: [
+            { text: "是 (已心臟停止 / 無生命徵象)", nextStep: 6 },
+            { text: "否 (仍有生命徵象)", nextStep: 2 }
+          ]
+        },
+        {
+          label: "步驟 3: 緊急處置與給藥",
+          question: "病患有過敏性休克且有生命徵象，立即實施下列處置：",
+          desc: "• <strong>1. 給氧與呼吸支持</strong>：依情況適當給氧，必要時以袋瓣式甦醒球 (BVM) 正壓通氣，並監測血氧 [註7]。<br>• <strong>2. 協助自備 EpiPen</strong>：若患者有自備腎上腺素注射筆，中級技術員 (EMT-2) 即可協助在大腿外側進行肌肉注射，戳入大腿維持 10 秒 [註4]。<br>• <strong>3. 高級技術員給藥 (P)</strong>：EMT-P 應<strong>直接給予 Epinephrine 0.5mg (1:1000 原液) 肌肉注射 (IM)</strong> 於上臂三角肌或大腿中段前外側；需要時 5~15 分鐘後可再給一次 [註5]。<br>• <strong>4. 大量靜脈輸液</strong>：建立大口徑靜脈留置針給予大量輸液以對抗休克 [註7]。",
+          choices: [
+            { text: "已完成給藥與初步處置，進行下一步", nextStep: 3 }
+          ],
+          guidelines: "<strong>【註4: 協助使用腎上腺素注射筆】</strong><br>• 如出現嚴重過敏反應但仍有生命徵象者，以大腿外側為注射部位，打開安全蓋，尖端對準大腿外側戳在大腿上 10 秒鐘肌肉注射。<br>• 距離第 1 次注射 EpiPen 超過 5 分鐘後仍有嚴重呼吸道腫脹或休克，且現場有 2 支以上 EpiPen，可透過指揮中心與線上醫導醫師決策，再施打肌肉注射一次。<br>• EpiPen 為民眾自行攜帶，救護車上不放置。<br><strong>【註5: Paramedic 肌肉注射】</strong><br>• EMT-P 出現嚴重過敏反應仍有生命徵象者，得直接肌肉注射 Epinephrine 0.5mg (1:1000)。若症狀改善幅度不足，得再注射一次，並考慮進行快速滴注。"
+        },
+        {
+          label: "步驟 4: 過敏源檢查 (蜂螫)",
+          question: "此致命性過敏反應是否為蜂螫造成？",
+          desc: "檢查暴露部位之皮膚或衣物，詢問發病病史。",
+          choices: [
+            { text: "是 (蜂螫造成)", nextStep: 4 },
+            { text: "否 (其他過敏源/未知原因)", nextStep: 7 }
+          ]
+        },
+        {
+          label: "步驟 5: 移除蜂針與毒囊",
+          question: "檢視傷口並進行蜂針移除：",
+          desc: "• <strong>移除蜂針</strong>：為避免毒囊之毒液持續注入體內，應檢視遭蜂螫之傷口，並將殘留皮膚之蜂針移除 [註6]。<br>• <strong>刮除方式</strong>：移除毒囊時<strong>應避免使用手指或鑷子</strong>等可能會擠壓毒囊的方法，建議可<strong>使用紙板或卡片刮除毒囊</strong> [註6]。",
+          choices: [
+            { text: "已完成蜂針刮除處置，進行下一步", nextStep: 7 }
+          ],
+          guidelines: "<strong>【註6: 移除蜂針細節】</strong><br>因為毒囊在被螫後仍會繼續收縮排毒，因此必須儘速刮除。使用卡片（如身分證、健保卡）或硬紙板以平角貼著皮膚輕輕刮去蜂針，不可直接用手指捏起，否則會把毒囊內剩餘毒液全部擠入體內。"
+        },
+        {
+          label: "非致命性過敏反應",
+          question: "評估為非致命性過敏狀況：",
+          desc: "病患目前無嚴重的呼吸道腫脹，亦無血液動力學不穩定之休克表現。應提供常規給氧，持續評估並常規送醫。",
+          choices: [],
+          recommendation: "維持氣道與給氧，並密切監測生命徵象，提防隨時發生的遲發性過敏反應。"
+        },
+        {
+          label: "心臟停止緊急救護",
+          question: "立即啟動高品質 CPR 與心臟停止救護流程！",
+          desc: "病患已無呼吸與脈搏。請立即執行去顫電擊 (若適用)，並進入【非創傷病患心臟停止緊急救護流程】處置！",
+          choices: [],
+          recommendation: "依非創傷 OHCA 協定急救。每 3-5 分鐘給予 Epinephrine 1mg IV/IO，積極尋找插管、給氧與心律轉復時機。"
+        },
+        {
+          label: "送醫與持續評估",
+          question: "救護車後送與心律持續監視：",
+          desc: "• <strong>持續監視心律</strong>與 SpO2 [註7]。<br>• <strong>再次給藥評估</strong>：若送醫途中症狀改善幅度不足，且距離首次給藥超過 5-15 分鐘，可重複肌肉注射 Epinephrine 0.5mg 一次，並進行快速點滴注射。<br>• 與接收醫院進行無線電預報，做好急救交班準備。",
+          choices: [],
+          recommendation: "持續給氧、大口徑靜脈留置針滴注。若心律改變或病情惡化隨時回報指揮中心及醫療指導醫師。",
+          guidelines: "<strong>【註7: 初評之必要處置】</strong><br>1. 依情況考慮給予高濃度氧氣治療或以袋瓣式甦醒球 (BVM) 給予正壓通氣，並持續監測血氧濃度。<br>2. 如出現休克徵狀則考慮以大口徑靜脈留置針給予大量輸液。<br>3. 送醫途中必須持續監視心律。"
+        }
+      ]
+    },
+    acls: {
+      title: "ACLS 致命心律 (VF/pVT/PEA/Asystole) 演算法",
+      subtitle: "成人致命性心律緊急救護協定對照",
+      steps: [
+        {
+          label: "步驟 1: 確認 OHCA",
+          question: "患者心肺功能停止，CPR 啟動，分析心律：",
+          desc: "給予高濃度氧氣，裝上 AED / 去顫器進行心律分析。",
+          choices: [
+            { text: "已準備好分析心律", nextStep: 1 }
+          ]
+        },
+        {
+          label: "步驟 2: 心律分析",
+          question: "去顫器分析心律，結果是否為可電擊心律 (Shockable)？",
+          desc: "• <strong>可電擊心律</strong>：心室顫動 (VF) 或無脈搏心室心搏過速 (pVT)。<br>• <strong>不可電擊心律</strong>：心搏停止 (Asystole) 或無脈搏電活動 (PEA)。",
+          choices: [
+            { text: "是 (VF / pVT 可電擊)", nextStep: 2 },
+            { text: "否 (Asystole / PEA 不可電擊)", nextStep: 4 }
+          ]
+        },
+        {
+          label: "步驟 3: 電擊與 CPR (Shockable)",
+          question: "執行電擊，並立即繼續 CPR：",
+          desc: "• <strong>電擊去顫</strong>：給予 1 次電擊，電擊後立即繼續 CPR，不要評估心律。<br>• <strong>建立血管路徑</strong>：進行靜脈 (IV) 或骨內針 (IO) 建立。<br>• <strong>給藥時機 (Epi)</strong>：在第 2 次電擊後，CPR 期間給予 <strong>Epinephrine 1mg IV/IO</strong>，之後每 3 - 5 分鐘給予一次。",
+          choices: [
+            { text: "仍為 Shockable 心律 (電擊 3 次後仍持續)", nextStep: 3 },
+            { text: "心律改變 / ROSC (恢復自主心跳)", nextStep: 5 }
+          ]
+        },
+        {
+          label: "步驟 4: 抗心律不整藥物",
+          question: "頑固性 VF/pVT 處置：",
+          desc: "• <strong>給予 Amiodarone</strong>：首劑 <strong>300 mg IV/IO</strong> 快速推注。若仍持續，次劑可給予 150 mg。<br>• <strong>替代藥物 Lidocaine</strong>：若無 Amiodarone，給予 Lidocaine 首劑 1.0 - 1.5 mg/kg IV/IO。<br>• <strong>排除尖端扭轉型室速 (TdP)</strong>：若為 TdP 則給予 <strong>Magnesium Sulfate 1 - 2 g IV/IO</strong>。<br>• 持續尋找可逆原因 (5H5T)。",
+          choices: [
+            { text: "繼續急救，重新分析心律", nextStep: 1 },
+            { text: "恢復自主心跳 (ROSC)", nextStep: 5 }
+          ]
+        },
+        {
+          label: "步驟 5: 非電擊心律處置 (PEA/Asystole)",
+          question: "不可電擊心律處置：",
+          desc: "• <strong>立即繼續 CPR</strong> 2 分鐘。<br>• <strong>儘速給予 Epinephrine 1mg IV/IO</strong>，每 3 - 5 分鐘給予一次。<br>• 考慮建立進階氣道與二氧化碳監測 (EtCO2)。<br>• 積極尋找並排除可逆原因：低體溫、低血容、酸中毒、高/低血鉀、張力性氣胸、心包填塞、毒物、血栓等。",
+          choices: [
+            { text: "2 分鐘 CPR 結束，重新分析心律", nextStep: 1 },
+            { text: "恢復自主心跳 (ROSC)", nextStep: 5 }
+          ]
+        },
+        {
+          label: "ROSC 復甦後照護",
+          question: "患者恢復自主心跳 (ROSC)！進入後續照護：",
+          desc: "• <strong>呼吸管理</strong>：維持 SpO2 92 - 98%，評估氣管插管。<br>• <strong>血壓控制</strong>：維持收縮壓 > 90 mmHg (必要時給予 Epinephrine 點滴輸注)。<br>• <strong>心電圖監測</strong>：做 12 導程 ECG 評估是否為 STEMI 送往適當醫院。<br>• 執行目標溫度管理 (TTM)。",
+          choices: [],
+          recommendation: "進入 ROSC 照護，維持器官灌流，持續監測生命徵象送醫。"
+        }
+      ]
+    },
+    brady: {
+      title: "症狀性心搏過緩演算法",
+      subtitle: "成人心率 < 50 bpm 處置對照",
+      steps: [
+        {
+          label: "步驟 1: 臨床評估",
+          question: "患者心率低於 50 bpm，進行初步臨床評估：",
+          desc: "評估患者是否有以下【血液動力學不穩定】的症狀？<br>1. 低血壓 (Hypotension)<br>2. 急性神智改變 (Altered Mental Status)<br>3. 休克徵象 (Signs of Shock)<br>4. 缺血性胸痛 (Ischemic Chest Pain)<br>5. 急性心力衰竭 (Acute Heart Failure)",
+          choices: [
+            { text: "是 (有上述任何一項不穩定狀況)", nextStep: 1 },
+            { text: "否 (血液動力學穩定，無上述症狀)", nextStep: 3 }
+          ]
+        },
+        {
+          label: "步驟 2: 第一線藥物治療",
+          question: "給予首劑抗膽鹼藥物治療：",
+          desc: "• <strong>給予 Atropine 1mg IV/IO</strong> 快速推注。<br>• 持續給予氧氣、監測 ECG、血壓與血氧。<br>• 注意：若為二度二期 (Mobitz II) 或三度房室阻滯伴寬 QRS 波，Atropine 通常無效，應儘速考慮起搏器。",
+          choices: [
+            { text: "Atropine 有效且症狀改善", nextStep: 4 },
+            { text: "Atropine 無效，症狀持續不穩定", nextStep: 2 }
+          ]
+        },
+        {
+          label: "步驟 3: 二線處置 (起搏與升壓藥)",
+          question: "Atropine 無效，啟動二線處置：",
+          desc: "以下處置可同步或選擇執行：<br>1. <strong>經皮心臟起搏器 (TCP)</strong>：立即裝設並啟動心外節律器。<br>2. <strong>Epinephrine 點滴輸注</strong>：以 2 - 10 mcg/min IV/IO 連續輸注，依血壓調整滴速。<br>3. <strong>Dopamine 點滴輸注</strong>：以 5 - 20 mcg/kg/min IV/IO 輸注。",
+          choices: [],
+          recommendation: "立即啟動經皮起搏 (Pacing) 或給予腎上腺素點滴輸注，持續監測並準備後送。"
+        },
+        {
+          label: "穩定狀態觀察",
+          question: "患者血液動力學穩定：",
+          desc: "目前無需給予急救藥物或起搏處置。請持續監測心律、血壓，建立靜脈通路，進行 12 導程心電圖檢查，並常規送醫評估。",
+          choices: [],
+          recommendation: "持續觀察生命徵象，做好隨時病情變化之急救準備。"
+        },
+        {
+          label: "治療成功",
+          question: "心搏過緩已得到有效控制：",
+          desc: "患者心率已恢復，不穩定症狀改善。請在送醫途中持續監視心電圖、血壓與呼吸狀態，防範心搏過緩再次復發。",
+          choices: [],
+          recommendation: "維持靜脈通路與持續心電圖監視，送醫交付醫療團隊。"
+        }
+      ]
+    }
+  },
+
+  // ==================== 急救流程精靈控制 ====================
   initProtocolsView: function() {
-    const btnAcls = document.getElementById("proto-btn-acls");
-    const btnBrady = document.getElementById("proto-btn-brady");
-    const cardAcls = document.getElementById("proto-acls-card");
-    const cardBrady = document.getElementById("proto-brady-card");
-
-    btnAcls.addEventListener("click", () => {
-      btnAcls.classList.add("active");
-      btnBrady.classList.remove("active");
-      cardAcls.style.display = "block";
-      cardBrady.style.display = "none";
+    const pills = document.querySelectorAll(".protocol-selector .filter-pill");
+    pills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        pills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        
+        const protocolId = pill.getAttribute("data-protocol");
+        this.state.wizard.protocolId = protocolId;
+        this.resetWizard();
+      });
     });
 
-    btnBrady.addEventListener("click", () => {
-      btnBrady.classList.add("active");
-      btnAcls.classList.remove("active");
-      cardBrady.style.display = "block";
-      cardAcls.style.display = "none";
+    const resetBtn = document.getElementById("wizard-btn-reset");
+    resetBtn.addEventListener("click", () => {
+      this.resetWizard();
     });
+
+    const nextBtn = document.getElementById("wizard-btn-next");
+    nextBtn.addEventListener("click", () => {
+      const proto = this.protocolsData[this.state.wizard.protocolId];
+      const currentStep = proto.steps[this.state.wizard.currentStepIndex];
+      // 如果是一步走完沒有選擇題，但有下一步 (單向繼續)
+      if (currentStep.choices && currentStep.choices.length === 1) {
+        this.handleWizardChoice(currentStep.choices[0].nextStep);
+      }
+    });
+
+    // 啟動首次渲染
+    this.resetWizard();
+  },
+
+  // 渲染當前步驟
+  renderWizardStep: function() {
+    const protocolId = this.state.wizard.protocolId;
+    const proto = this.protocolsData[protocolId];
+    const stepIndex = this.state.wizard.currentStepIndex;
+    const step = proto.steps[stepIndex];
+
+    // 更新標題
+    document.getElementById("wizard-proto-title").textContent = proto.title;
+    document.getElementById("wizard-proto-subtitle").textContent = proto.subtitle;
+
+    // 更新步驟標籤與進度條
+    document.getElementById("wizard-step-label").textContent = step.label;
+    const progressPercent = Math.min(((stepIndex + 1) / proto.steps.length) * 100, 100);
+    document.getElementById("wizard-progress-fill").style.width = `${progressPercent}%`;
+
+    // 更新問題/描述
+    document.getElementById("wizard-question-title").innerHTML = step.question;
+    document.getElementById("wizard-question-desc").innerHTML = step.desc;
+
+    // 渲染選項按鈕
+    const choicesContainer = document.getElementById("wizard-choices-container");
+    choicesContainer.innerHTML = "";
+
+    const nextBtn = document.getElementById("wizard-btn-next");
+    nextBtn.style.display = "none";
+
+    if (step.choices && step.choices.length > 0) {
+      if (step.choices.length === 1) {
+        // 單向流程 (「下一步」)，隱藏選項按鈕，改為直接按最下方的繼續按鈕
+        nextBtn.style.display = "inline-block";
+        nextBtn.innerHTML = `${step.choices[0].text} <i class="fa-solid fa-arrow-right"></i>`;
+      } else {
+        // 多個分歧按鈕
+        step.choices.forEach(choice => {
+          const btn = document.createElement("button");
+          btn.className = "quiz-opt-btn";
+          btn.style.textAlign = "left";
+          btn.style.marginBottom = "8px";
+          btn.innerHTML = `<i class="fa-regular fa-circle-question" style="color: var(--color-primary); margin-right: 8px;"></i> ${choice.text}`;
+          btn.addEventListener("click", () => {
+            this.handleWizardChoice(choice.nextStep);
+          });
+          choicesContainer.appendChild(btn);
+        });
+      }
+    }
+
+    // 顯示建議處置面板 (如果為葉節點或特別註明)
+    const recBox = document.getElementById("wizard-recommendation-box");
+    const recText = document.getElementById("wizard-recommendation-text");
+    if (step.recommendation) {
+      recBox.style.display = "block";
+      recText.innerHTML = step.recommendation;
+    } else {
+      recBox.style.display = "none";
+    }
+
+    // 顯示臨床註解面板
+    const guiBox = document.getElementById("wizard-guidelines-box");
+    const guiText = document.getElementById("wizard-guidelines-text");
+    if (step.guidelines) {
+      guiBox.style.display = "block";
+      guiText.innerHTML = step.guidelines;
+    } else {
+      guiBox.style.display = "none";
+    }
+  },
+
+  // 處理選項點擊
+  handleWizardChoice: function(nextStepIndex) {
+    this.state.wizard.history.push(this.state.wizard.currentStepIndex);
+    this.state.wizard.currentStepIndex = nextStepIndex;
+    this.renderWizardStep();
+  },
+
+  // 重設精靈
+  resetWizard: function() {
+    this.state.wizard.currentStepIndex = 0;
+    this.state.wizard.history = [];
+    this.renderWizardStep();
   },
 
   // ==================== QUIZ SYSTEM ====================

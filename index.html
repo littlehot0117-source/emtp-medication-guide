@@ -201,103 +201,70 @@
         <!-- ==================== PAGE 3: PROTOCOLS ==================== -->
         <section id="protocols-section" class="page-section">
           <div class="protocol-container">
-            <div class="protocol-selector">
-              <button class="filter-pill active" id="proto-btn-acls">ACLS 致命心律演算法</button>
-              <button class="filter-pill" id="proto-btn-brady">心搏過緩演算法</button>
+            
+            <!-- Protocol Type Selection -->
+            <div class="protocol-selector" style="margin-bottom: 24px;">
+              <button class="filter-pill active" data-protocol="anaphylaxis">成人致命性過敏流程</button>
+              <button class="filter-pill" data-protocol="acls">ACLS 致命心律演算法</button>
+              <button class="filter-pill" data-protocol="brady">症狀性心搏過緩演算法</button>
             </div>
 
-            <!-- ACLS Cardiac Arrest Flowchart -->
-            <div class="protocol-card" id="proto-acls-card">
+            <!-- Interactive Wizard Card -->
+            <div class="protocol-card">
               <div class="protocol-header">
-                <h3>ACLS 致命心律 (VF/pVT/PEA/Asystole) 處置對照</h3>
-                <p>點擊藍色連結藥物，可立即查閱詳細的說明書與稀釋方法。</p>
+                <h3 id="wizard-proto-title">成人致命性過敏傷病患救護流程</h3>
+                <p id="wizard-proto-subtitle">嘉義縣消防局緊急醫療救護協定對照</p>
               </div>
 
-              <div class="protocol-flowchart">
-                <div class="flow-node">
-                  <div class="node-title">發現 OHCA / CPR 啟動</div>
-                  <div class="node-desc">給予氧氣、連接心電圖去顫器</div>
-                </div>
+              <!-- Wizard Play Box -->
+              <div class="wizard-box" style="margin-top: 24px; display: flex; flex-direction: column; gap: 20px;">
                 
-                <div class="flow-connector"></div>
-
-                <div class="flow-node">
-                  <div class="node-title">分析心律：是否可電擊？</div>
-                  <div class="node-desc">VF / 無脈搏 VT (Shockable) 或 Asystole / PEA (Non-shockable)</div>
-                </div>
-
-                <div class="flow-connector"></div>
-
-                <div class="flow-node highlight">
-                  <div class="node-title">進入給藥時機</div>
-                  <div class="node-desc">
-                    所有 OHCA 每 3-5 分鐘給予一次 <span class="drug-link" onclick="app.showDrugDetail('epinephrine')">Epinephrine (1 mg)</span>
+                <!-- Step Indicator -->
+                <div class="quiz-progress" style="border-bottom: none; padding-bottom: 0;">
+                  <span style="font-weight: 600; color: var(--color-primary);" id="wizard-step-label">步驟 1: 初步評估</span>
+                  <div class="progress-bar-container" style="width: 80%;">
+                    <div class="progress-bar-fill" id="wizard-progress-fill" style="width: 20%;"></div>
                   </div>
                 </div>
 
-                <div class="flow-connector"></div>
-
-                <div class="flow-node">
-                  <div class="node-title">若為 VF/pVT 持續 (電擊 3 次後)</div>
-                  <div class="node-desc">
-                    首選抗心律不整藥：<span class="drug-link" onclick="app.showDrugDetail('amiodarone')">Amiodarone (首劑 300 mg / 次劑 150 mg)</span>
-                    <br>或使用替代藥物：Lidocaine (1.0 - 1.5 mg/kg)
+                <!-- Step Description/Question Card -->
+                <div class="flow-node highlight" style="text-align: left; background-color: var(--bg-primary);">
+                  <div class="node-title" id="wizard-question-title" style="font-size: 1.1rem; line-height: 1.5;">出現過敏反應經初步評估並詢問病史，患者是否有下列任一狀況？</div>
+                  <div class="node-desc" id="wizard-question-desc" style="font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: var(--text-primary);">
+                    1. 有嚴重呼吸道腫脹症狀 (如血管水腫、喉部水腫、聲音沙啞、喘鳴、哮喘)<br>
+                    2. 有休克症狀 (如意識不清、低血壓、臉色蒼白、冷汗、CRT > 2秒)
                   </div>
                 </div>
 
-                <div class="flow-connector"></div>
+                <!-- Interactive Choices -->
+                <div class="quiz-options" id="wizard-choices-container">
+                  <!-- e.g. Yes / No buttons -->
+                </div>
 
-                <div class="flow-node">
-                  <div class="node-title">特殊情況排除</div>
-                  <div class="node-desc">
-                    尖端扭轉型室速 (TdP) 給予 Magnesium Sulfate (1-2 g)
-                    <br>酸血症/高血鉀給予 NaHCO3 (1 mEq/kg)
-                    <br>低血糖症給予 <span class="drug-link" onclick="app.showDrugDetail('glucose')">D50W (20-50 mL)</span>
+                <!-- Recommendation & Action panel -->
+                <div class="quiz-feedback" id="wizard-recommendation-box" style="display: none; background-color: rgba(59, 130, 246, 0.05); border-left-color: var(--color-accent);">
+                  <h4 style="font-weight: 700; color: var(--color-accent); margin-bottom: 8px;"><i class="fa-solid fa-hand-holding-medical"></i> 建議處置與應做處置</h4>
+                  <div id="wizard-recommendation-text" style="font-size: 0.95rem; line-height: 1.6;">
+                    <!-- Recommendations text -->
                   </div>
                 </div>
+
+                <!-- Detailed Guidelines/Annotations (e.g. 註1, 註2) -->
+                <div id="wizard-guidelines-box" style="display: none; padding: 16px; background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 12px; font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary);">
+                  <h5 style="font-weight: 700; color: var(--text-primary); margin-bottom: 6px;"><i class="fa-solid fa-circle-info"></i> 臨床註解與說明</h5>
+                  <div id="wizard-guidelines-text">
+                    <!-- Notes -->
+                  </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+                  <button class="filter-pill" id="wizard-btn-reset" style="padding: 8px 16px;"><i class="fa-solid fa-rotate-left"></i> 重設流程</button>
+                  <button class="next-quiz-btn" id="wizard-btn-next" style="display: none; padding: 10px 24px; border-radius: 10px;">繼續 <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
               </div>
-            </div>
 
-            <!-- Bradycardia Flowchart -->
-            <div class="protocol-card" id="proto-brady-card" style="display: none;">
-              <div class="protocol-header">
-                <h3>成人症狀性心搏過緩演算法對照</h3>
-                <p>HR < 50 bpm 且伴隨低血壓、休克、胸痛或心衰竭之臨床步驟。</p>
-              </div>
-
-              <div class="protocol-flowchart">
-                <div class="flow-node">
-                  <div class="node-title">評估臨床症狀</div>
-                  <div class="node-desc">維持氣道、給予氧氣監測、心電圖及血壓</div>
-                </div>
-                
-                <div class="flow-connector"></div>
-
-                <div class="flow-node">
-                  <div class="node-title">是否有血液動力學不穩定？</div>
-                  <div class="node-desc">低血壓、急性神智改變、休克徵象、缺血性胸痛、急性心衰竭</div>
-                </div>
-
-                <div class="flow-connector"></div>
-
-                <div class="flow-node highlight">
-                  <div class="node-title">第一線給藥處置</div>
-                  <div class="node-desc">
-                    給予首劑抗膽鹼藥物：<span class="drug-link" onclick="app.showDrugDetail('atropine')">Atropine (1 mg IV)</span>，可每 3-5 分鐘重複，最大累積 3 mg。
-                  </div>
-                </div>
-
-                <div class="flow-connector"></div>
-
-                <div class="flow-node">
-                  <div class="node-title">若 Atropine 無效</div>
-                  <div class="node-desc">
-                    啟動經皮節律器 (TCP) 或
-                    <br>靜脈滴注：Dopamine 輸注 (5-20 mcg/kg/min)
-                    <br>或使用：<span class="drug-link" onclick="app.showDrugDetail('epinephrine')">Epinephrine 輸注 (2-10 mcg/min)</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
