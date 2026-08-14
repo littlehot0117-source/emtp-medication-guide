@@ -1708,9 +1708,8 @@ const app = {
         nextBtn.innerHTML = `${step.choices[0].text} <i class="fa-solid fa-arrow-right"></i>`;
       } else if (step.choices.length === 2) {
         // 二選一 (左右對開正方形/矩形卡片)
-        choicesContainer.style.display = "flex";
-        choicesContainer.style.gap = "16px";
-        choicesContainer.style.flexDirection = "row";
+        choicesContainer.className = "wizard-choices-row";
+        choicesContainer.removeAttribute("style");
         
         step.choices.forEach((choice, index) => {
           const btn = document.createElement("button");
@@ -1728,31 +1727,11 @@ const app = {
           }
           
           btn.innerHTML = `
-            <div class="sq-btn-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; height: 110px; width: 100%; border-radius: 12px; border: 2px solid var(--border-color); background: rgba(255, 255, 255, 0.03); color: var(--text-primary); transition: all 0.2s ease; cursor: pointer; padding: 12px; text-align: center;">
-              <i class="fa-solid ${iconClass}" style="font-size: 1.8rem; color: ${iconColor};"></i>
-              <span style="font-weight: 600; font-size: 0.95rem; line-height: 1.3;">${choice.text}</span>
+            <div class="sq-btn-content">
+              <i class="fa-solid ${iconClass}" style="color: ${iconColor};"></i>
+              <span>${choice.text}</span>
             </div>
           `;
-          
-          // 加入 Hover 與點擊效果
-          const btnContent = btn.querySelector(".sq-btn-content");
-          btn.style.flex = "1";
-          btn.style.border = "none";
-          btn.style.background = "none";
-          btn.style.padding = "0";
-          btn.style.cursor = "pointer";
-          
-          btn.addEventListener("mouseenter", () => {
-            btnContent.style.borderColor = "var(--color-primary)";
-            btnContent.style.background = "rgba(59, 130, 246, 0.08)";
-            btnContent.style.transform = "translateY(-2px)";
-          });
-          
-          btn.addEventListener("mouseleave", () => {
-            btnContent.style.borderColor = "var(--border-color)";
-            btnContent.style.background = "rgba(255, 255, 255, 0.03)";
-            btnContent.style.transform = "translateY(0)";
-          });
           
           btn.addEventListener("click", () => {
             this.handleWizardChoice(choice.nextStep);
