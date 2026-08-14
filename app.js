@@ -1063,8 +1063,66 @@ const app = {
         // 單向流程 (「下一步」)，隱藏選項按鈕，改為直接按最下方的繼續按鈕
         nextBtn.style.display = "inline-block";
         nextBtn.innerHTML = `${step.choices[0].text} <i class="fa-solid fa-arrow-right"></i>`;
+      } else if (step.choices.length === 2) {
+        // 二選一 (左右對開正方形/矩形卡片)
+        choicesContainer.style.display = "flex";
+        choicesContainer.style.gap = "16px";
+        choicesContainer.style.flexDirection = "row";
+        
+        step.choices.forEach((choice, index) => {
+          const btn = document.createElement("button");
+          btn.className = "wizard-square-btn";
+          
+          // 判斷圖標與顏色
+          let iconClass = "fa-circle-question";
+          let iconColor = "var(--color-primary)";
+          if (choice.text.includes("是") || choice.text.includes("可電擊")) {
+            iconClass = "fa-circle-check";
+            iconColor = "var(--color-success)";
+          } else if (choice.text.includes("否") || choice.text.includes("不可電擊")) {
+            iconClass = "fa-circle-xmark";
+            iconColor = "var(--color-danger)";
+          }
+          
+          btn.innerHTML = `
+            <div class="sq-btn-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; height: 110px; width: 100%; border-radius: 12px; border: 2px solid var(--border-color); background: rgba(255, 255, 255, 0.03); color: var(--text-primary); transition: all 0.2s ease; cursor: pointer; padding: 12px; text-align: center;">
+              <i class="fa-solid ${iconClass}" style="font-size: 1.8rem; color: ${iconColor};"></i>
+              <span style="font-weight: 600; font-size: 0.95rem; line-height: 1.3;">${choice.text}</span>
+            </div>
+          `;
+          
+          // 加入 Hover 與點擊效果
+          const btnContent = btn.querySelector(".sq-btn-content");
+          btn.style.flex = "1";
+          btn.style.border = "none";
+          btn.style.background = "none";
+          btn.style.padding = "0";
+          btn.style.cursor = "pointer";
+          
+          btn.addEventListener("mouseenter", () => {
+            btnContent.style.borderColor = "var(--color-primary)";
+            btnContent.style.background = "rgba(59, 130, 246, 0.08)";
+            btnContent.style.transform = "translateY(-2px)";
+          });
+          
+          btn.addEventListener("mouseleave", () => {
+            btnContent.style.borderColor = "var(--border-color)";
+            btnContent.style.background = "rgba(255, 255, 255, 0.03)";
+            btnContent.style.transform = "translateY(0)";
+          });
+          
+          btn.addEventListener("click", () => {
+            this.handleWizardChoice(choice.nextStep);
+          });
+          
+          choicesContainer.appendChild(btn);
+        });
       } else {
-        // 多個分歧按鈕
+        // 多個選項 (恢復垂直堆疊)
+        choicesContainer.style.display = "grid";
+        choicesContainer.style.gap = "8px";
+        choicesContainer.style.flexDirection = "unset";
+        
         step.choices.forEach(choice => {
           const btn = document.createElement("button");
           btn.className = "quiz-opt-btn";
