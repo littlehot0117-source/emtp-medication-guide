@@ -25,7 +25,7 @@ const app = {
     }
   },
 
-  // 靜態測驗問題庫
+  // 靜態測驗問題庫 (共 10 題，全數與 11 種保留藥物對齊)
   quizPool: [
     {
       question: "下列何者為 Epinephrine (腎上腺素) 的主要藥理機轉？",
@@ -33,108 +33,108 @@ const app = {
         "主要作用於 α1, β1, β2 受體，收縮血管、增強心肌收縮力並舒張支氣管",
         "選擇性阻斷鈉離子通道，延長動作電位時間",
         "阻斷副交感神經 M 膽鹼受體，解除迷走神經對心臟的抑制",
-        "特異性拮抗中樞阿片受體，恢復自主呼吸"
+        "特異性拮抗阿片樣受體，逆轉呼吸抑制"
       ],
       correctIndex: 0,
-      explanation: "Epinephrine (腎上腺素) 為擬交感神經藥物，同時興奮 α1（血管收縮）、β1（心跳加快、收縮力增強）及 β2 受體（支氣管舒張）。"
+      explanation: "Epinephrine 是非選擇性的腎上腺素受體激動劑，作用於 α1 (血管收縮)、β1 (強心) 及 β2 (支氣管擴張) 受體，是 OHCA 及過敏性休克的第一線急救藥。"
     },
     {
-      question: "高級救護技術員執行心肺復甦術，對去顫無反應之 VF/pVT 時，Amiodarone (臟安) 的第一劑靜脈注射劑量為何？",
+      question: "對於 OHCA (心肺功能停止) 的 VF/pVT 頑固性心律，Amiodarone 的首劑建議劑量為何？",
       options: [
-        "150 mg",
-        "300 mg",
-        "1 mg",
-        "6 mg"
+        "150 mg IV Push",
+        "300 mg IV Push",
+        "1 mg IV Push",
+        "150 mg 稀釋於 100 mL D5W 中慢速滴注 10 分鐘"
       ],
       correctIndex: 1,
-      explanation: "根據 ACLS 規範，對於 VF/pVT 頑固性心律不整，Amiodarone 的首劑推注劑量為 300 mg (通常為 2 支)；若無改善，次劑為 150 mg。"
+      explanation: "在 ACLS 致命心律 (VF/pVT) 演算法中，Amiodarone 用於去顫與升壓藥無效後，首劑為 300 mg IV/IO push，第二劑可再給 150 mg IV/IO push。而有脈搏的穩定 VT 才是用 150 mg 慢速滴注。"
     },
     {
-      question: "下列關於 Adenosine (腺苷) 的臨床使用注意事項，何者錯誤？",
+      question: "當給予 Adenosine 治療穩定型 PSVT 時，下列哪項操作是正確的？",
       options: [
-        "半衰期極短（小於 10 秒），故需極快速推注並立即以 20 mL NS 沖水",
-        "給藥時應選擇最靠近心臟的近端靜脈管路",
-        "若患者有支氣管哮喘 (Asthma) 或嚴重 COPD，仍是首選且安全的藥物",
-        "給藥後心電圖可能短暫出現心搏停止 (Asystole) 數秒，應向患者預先解釋"
+        "應選擇遠端靜脈（如手背靜脈）以確保安全",
+        "給藥速度應緩慢滴注至少 10 分鐘以上",
+        "必須極快速推注 (Rapid IV push)，並立即用 20 mL 生理食鹽水快速沖洗",
+        "支氣管氣喘 (Asthma) 患者是首選對象"
       ],
       correctIndex: 2,
-      explanation: "Adenosine 會引起顯著的支氣管平滑肌收縮，故支氣管哮喘 (Asthma) 或嚴重 COPD 患者為其相對/絕對禁忌症。"
+      explanation: "Adenosine 的半衰期小於 10 秒，必須在最靠近心臟的近端靜脈管路中，以雙向三路接頭 (Three-way) 快速推注給藥，隨後立即以大量生理食鹽水沖水。支氣管氣喘為其相對/絕對禁忌症。"
     },
     {
-      question: "在疑似有機磷農藥中毒的現場，高級救護技術員常用何種藥物進行「阿托平化」(Atropinization) 治療？",
+      question: "Atropine Sulfate 用於有血液動力學症狀的心搏過緩患者時，成人的最大累積劑量上限是多少？",
       options: [
-        "Atropine (阿托平)",
-        "Naloxone (納洛酮)",
-        "Sodium Bicarbonate (碳酸氫鈉)",
-        "Calcium Chloride (氯化鈣)"
+        "1 mg",
+        "2 mg",
+        "3 mg",
+        "無上限，直到心率大於 60 bpm"
       ],
-      correctIndex: 0,
-      explanation: "Atropine 具有強大的抗膽鹼作用，有機磷中毒時需給予大劑量 (2-5 mg) Atropine 重複推注，直到氣管分泌物變乾、囉音消失為止。"
+      correctIndex: 2,
+      explanation: "Atropine 用於成人症狀性心搏過緩時，單次劑量為 1 mg IV，每 3-5 分鐘可重複，最大總累積劑量限制為 3 mg。超過此劑量可能產生完全的抗膽鹼阻斷作用。"
     },
     {
-      question: "嚴重創傷大出血現場，TXA (斷血炎) 應於受傷後幾小時內給予，才能有效降低出血性休克患者的死亡率？",
+      question: "關於 TXA (傳明酸 / 斷血炎) 於嚴重創傷出血患者的院前給藥，下列敘述何者錯誤？",
       options: [
-        "1 小時內",
-        "3 小時內",
-        "6 小時內",
-        "12 小時內"
-      ],
-      correctIndex: 1,
-      explanation: "CRASH-2 大型研究顯示，TXA 必須在創傷後 3 小時內給予方能降低死亡率；超過 3 小時給藥反而會增加血栓風險與死亡率。"
-    },
-    {
-      question: "下列何種情況【不是】給予 Nitroglycerin (NTG) 舌下含片的禁忌症？",
-      options: [
-        "收縮壓 (SBP) 低於 90 mmHg",
-        "懷疑右心室梗塞的患者",
-        "24 小時內服用過 Sildenafil (威而鋼)",
-        "心率每分鐘 85 次"
+        "傷病患收縮壓應小於 90 mmHg 或心率大於 110 bpm",
+        "受傷時間必須在 3 小時內，超過 3 小時給藥會增加死亡率",
+        "首劑建議劑量為 1 g 加入 100 mL 生理食鹽水中於 10 分鐘內滴完",
+        "為了加速止血，應以原液在 1 分鐘內直接靜脈推注完畢"
       ],
       correctIndex: 3,
-      explanation: "NTG 禁忌症包含收縮壓 < 90 mmHg、右心室梗塞（依賴前負荷）、24小時內服用壯陽藥；心率 85 bpm 屬於正常範圍，非禁忌。"
+      explanation: "TXA 快速靜脈推注可能引發暫時性低血壓。院前建議劑量為 1 g 加入 100 mL NS 或 D5W 中，慢速點滴滴注 10 分鐘，切忌快速推注。"
     },
     {
-      question: "當懷疑患者海洛因等阿片類藥物過量中毒，出現呼吸抑制、昏迷及針尖樣瞳孔時，應給予何種拮抗劑？",
+      question: "在給予 Nitroglycerin (NTG) 舌下含片之前，必須排除的絕對禁忌症不包括下列何者？",
       options: [
-        "Atropine (阿托平)",
-        "Naloxone (納洛酮)",
-        "Midazolam (導美康)",
-        "Calcium Chloride (氯化鈣)"
+        "收縮壓 (SBP) 低於 90 mmHg",
+        "患者於 24-48 小時內曾服用威而鋼或犀利士等壯陽藥",
+        "懷疑右心室心肌梗塞 (RV Infarction)",
+        "患者伴隨嚴重的呼吸困難與雙下肢水腫"
+      ],
+      correctIndex: 3,
+      explanation: "NTG 的三大禁忌症為：低血壓 (SBP < 90 mmHg)、右心梗塞（極度依赖前負荷）以及近期使用壯陽藥。而呼吸困難與水腫（疑似心衰竭肺水腫）通常是 NTG 的適應症之一，而非禁忌症。"
+    },
+    {
+      question: "當懷疑患者阿片類藥物過量中毒且伴隨呼吸抑制 (RR < 12) 時，給予 Naloxone (納洛酮) 的目的為何？",
+      options: [
+        "預防癲癇大發作",
+        "拮抗阿片樣受體，逆轉呼吸抑制與意識障礙",
+        "升高血壓並增強心肌收縮力",
+        "直接溶解栓塞血管中的纖維蛋白"
       ],
       correctIndex: 1,
-      explanation: "Naloxone (納洛酮) 為阿片類藥物（海洛因、嗎啡、芬太尼等）的特異性競爭性拮抗劑，能迅速逆轉呼吸抑制。"
+      explanation: "Naloxone 是特異性阿片樣受體拮抗劑，能競爭性阻斷嗎啡、海洛因、芬太尼等藥物與受體結合，從而逆轉呼吸抑制與深昏迷。"
     },
     {
-      question: "下列何者為 Midazolam (導美康) 用於持續性癲癇重積狀態的成人常規首劑給藥劑量與途徑？",
+      question: "當高級救護技術員 (EMT-P) 評估成人癲癇重積狀態，欲給予 Midazolam 進行控制時，下列哪項給藥劑量與途徑是合理的？",
       options: [
-        "2.5 - 5 mg 緩慢靜脈注射 (IV) 或 5 - 10 mg 肌肉注射 (IM)",
-        "15 mg 快速靜脈推注 (IV)",
-        "0.1 mg 緩慢靜脈注射 (IV)",
-        "0.5 mg 肌肉注射 (IM)"
-      ],
-      correctIndex: 0,
-      explanation: "Midazolam 用於成人癲癇發作時，常規劑量為 2.5 - 5 mg 緩慢靜脈推注 (IV)；或使用 5 - 10 mg 肌肉注射 (IM) 或鼻腔給藥 (IN)。"
-    },
-    {
-      question: "兒科心肺功能停止 (OHCA) 現場給予 Epinephrine (1:10,000) 的靜脈/骨內注射劑量為何？",
-      options: [
-        "0.1 mg/kg (即 1:10,000 稀釋液 1 mL/kg)",
-        "0.01 mg/kg (即 1:10,000 稀釋液 0.1 mL/kg)",
-        "1 mg 固定劑量",
-        "0.5 mg 固定劑量"
+        "直接靜脈注射 (IV) 15 mg 快速推注",
+        "肌肉注射 (IM) 或鼻腔給藥 (IN) 5 - 10 mg；或緩慢靜脈注射 (IV) 2.5 - 5 mg",
+        "口服嚼碎 160 mg",
+        "稀釋於 250 mL D5W 中以 100 mcg/min 點滴微量注射"
       ],
       correctIndex: 1,
-      explanation: "兒科 CPR 的腎上腺素劑量為 0.01 mg/kg。若使用 1:10,000 稀釋液（0.1 mg/mL），對應容積即為 0.1 mL/kg。"
+      explanation: "Midazolam 控制癲癇時，靜脈注射 (IV) 應緩慢注射 (2.5 - 5 mg) 以免過快引發呼吸抑制；若無靜脈通路，可肌肉注射 (IM) 或鼻腔噴入 (IN) 5 - 10 mg。"
     },
     {
-      question: "關於 Tramadol (曲馬多) 在本院前救護常規中的使用途徑與配製，下列何者正確？",
+      question: "對於兒科低血糖患者，現場執行葡萄糖注射液治療時，下列何種規格與劑量最安全？",
       options: [
-        "院前僅限行深部肌肉注射 (IM)，且不需稀釋",
-        "必須稀釋至 10 mL 行快速靜脈推注 (IV)",
-        "與生理食鹽水混合行點滴連續滴注 (IV Infusion)",
-        "為了加速起效，首選骨內針路徑 (IO) 給藥"
+        "直接注射高濃度 D50W 2 mL/kg",
+        "給予 D10W 2 - 5 mL/kg 靜脈滴注，禁用高滲透壓之 D50W 以免破壞幼兒血管",
+        "必須配合 EpiPen 連續肌肉注射",
+        "給予 Atropine 0.02 mg/kg 共同滴注"
       ],
-      correctIndex: 0,
+      correctIndex: 1,
+      explanation: "兒科細小血管容易因高濃度滲透壓而壞死或產生靜脈炎。兒科低血糖治療首選 D10W 2-5 mL/kg 靜脈滴注，新生兒給予 D10W 2 mL/kg，在院前禁用高濃度的 D50W 直推。"
+    },
+    {
+      question: "根據本系統之急救用藥安全協定，為何 Tramadol (曲馬多) 的給藥途徑僅留下肌肉注射 (IM)？",
+      options: [
+        "因為 Tramadol 沒有靜脈注射劑型",
+        "因為靜脈注射 (IV) 易引發嚴重的噁心、嘔吐、頭暈，甚至引發短暫低血壓，院前救護應予避開",
+        "為了加速起效，首選骨內針路徑 (IO) 給藥",
+        "為了預防雷氏症候群 (Reye's Syndrome)"
+      ],
+      correctIndex: 1,
       explanation: "根據本院前救護協定，為了防範靜脈推注速度過快引發嚴重的噁心、嘔吐與低血壓，Tramadol 僅限行深部肌肉注射 (IM)，不需稀釋直接原液注射。"
     }
   ],
@@ -204,14 +204,19 @@ const app = {
 
   // 初始化所有彈窗事件
   initModals: function() {
-    const closeDetail = document.getElementById("close-modal-btn");
     const detailModal = document.getElementById("drug-detail-modal");
-    
-    closeDetail.addEventListener("click", () => {
+    const disclaimerModal = document.getElementById("disclaimer-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const closeDiscBtn = document.getElementById("close-disclaimer-btn");
+    const acceptDiscBtn = document.getElementById("accept-disclaimer-btn");
+    const saveNoteBtn = document.getElementById("save-notes-btn");
+
+    // 關閉詳情彈窗
+    closeModalBtn.addEventListener("click", () => {
       detailModal.classList.remove("active");
     });
-    
-    // 點擊背景關閉
+
+    // 點選遮罩關閉詳情彈窗
     detailModal.addEventListener("click", (e) => {
       if (e.target === detailModal) {
         detailModal.classList.remove("active");
@@ -219,41 +224,31 @@ const app = {
     });
 
     // 免責聲明事件
-    const discModal = document.getElementById("disclaimer-modal");
-    const closeDisc = document.getElementById("close-disclaimer-btn");
-    const acceptDisc = document.getElementById("accept-disclaimer-btn");
-    const openDisc = document.getElementById("open-disclaimer-btn");
-
-    closeDisc.addEventListener("click", () => {
-      discModal.classList.remove("active");
-    });
-
-    acceptDisc.addEventListener("click", () => {
-      localStorage.setItem("emtp_disclaimer_accepted", "true");
-      discModal.classList.remove("active");
-      this.showToast("條款已同意，感謝您的使用！");
-    });
-
-    openDisc.addEventListener("click", () => {
-      discModal.classList.add("active");
+    closeDiscBtn.addEventListener("click", () => {
+      disclaimerModal.classList.remove("active");
     });
     
-    // 筆記儲存按鈕
-    const saveNoteBtn = document.getElementById("save-notes-btn");
+    acceptDiscBtn.addEventListener("click", () => {
+      localStorage.setItem("emtp_disclaimer_accepted", "true");
+      disclaimerModal.classList.remove("active");
+      this.showToast("已同意並啟用全功能手冊");
+    });
+
+    // 筆記儲存事件
     saveNoteBtn.addEventListener("click", () => {
       const drugId = saveNoteBtn.getAttribute("data-drug-id");
-      const noteText = document.getElementById("modal-notes-area").value.trim();
+      const text = document.getElementById("modal-notes-area").value.trim();
       
       if (drugId) {
-        if (noteText) {
-          this.state.notes[drugId] = noteText;
+        if (text) {
+          this.state.notes[drugId] = text;
         } else {
           delete this.state.notes[drugId];
         }
         this.saveLocalStorage();
-        this.showToast("臨床筆記儲存成功！");
+        this.showToast("備忘錄儲存成功！");
         
-        // 若在書籤頁面，需重新渲染筆記列表
+        // 若在書籤頁，更新渲染
         if (this.state.currentSection === "bookmarks-section") {
           this.renderBookmarksSection();
         }
@@ -261,12 +256,12 @@ const app = {
     });
   },
 
-  // 導覽選單初始化
+  // 初始化分頁導覽
   initNavigation: function() {
     const navItems = document.querySelectorAll(".nav-item");
     const sections = document.querySelectorAll(".page-section");
     const pageTitle = document.getElementById("page-title");
-    const searchContainer = document.getElementById("global-search-container");
+    const searchContainer = document.querySelector(".search-container");
 
     navItems.forEach(item => {
       item.addEventListener("click", () => {
@@ -333,21 +328,21 @@ const app = {
     });
   },
 
-  // 分類篩選按鈕初始化
+  // 分類過濾按鈕初始化
   initFilters: function() {
-    const pills = document.querySelectorAll(".filter-pill");
-    pills.forEach(pill => {
-      pill.addEventListener("click", () => {
-        pills.forEach(p => p.classList.remove("active"));
-        pill.classList.add("active");
+    const categoryBtns = document.querySelectorAll(".filter-pill");
+    categoryBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        categoryBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
         
-        this.state.activeCategory = pill.getAttribute("data-category");
+        this.state.activeCategory = btn.getAttribute("data-category");
         this.renderDrugList(document.getElementById("search-input").value.toLowerCase().trim());
       });
     });
   },
 
-  // 渲染主藥物列表
+  // 渲染主藥物列表 (依英文首字母 A-Z 排序)
   renderDrugList: function(searchQuery = "") {
     const listContainer = document.getElementById("drug-list");
     listContainer.innerHTML = "";
@@ -426,21 +421,17 @@ const app = {
   // 收藏/取消收藏邏輯
   toggleBookmark: function(drugId, buttonEl) {
     const index = this.state.bookmarks.indexOf(drugId);
-    let bookmarked = false;
-
-    if (index > -1) {
-      this.state.bookmarks.splice(index, 1);
-      buttonEl.classList.remove("active");
-      buttonEl.querySelector("i").className = "fa-regular fa-star";
-      this.showToast("已從書籤中移除");
-    } else {
+    if (index === -1) {
       this.state.bookmarks.push(drugId);
       buttonEl.classList.add("active");
       buttonEl.querySelector("i").className = "fa-solid fa-star";
-      this.showToast("已加入我的書籤");
-      bookmarked = true;
+      this.showToast("已加入收藏書籤");
+    } else {
+      this.state.bookmarks.splice(index, 1);
+      buttonEl.classList.remove("active");
+      buttonEl.querySelector("i").className = "fa-regular fa-star";
+      this.showToast("已從收藏書籤移除");
     }
-
     this.saveLocalStorage();
 
     // 若在書籤頁面，操作後需重新渲染該頁
@@ -476,11 +467,13 @@ const app = {
     const renderList = (elementId, array) => {
       const container = document.getElementById(elementId);
       container.innerHTML = "";
-      array.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        container.appendChild(li);
-      });
+      if (array && array.length > 0) {
+        array.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          container.appendChild(li);
+        });
+      }
     };
 
     renderList("modal-drug-indications", drug.indications);
@@ -499,93 +492,76 @@ const app = {
     document.getElementById("drug-detail-modal").classList.add("active");
   },
 
-  // 渲染書籤頁面
+  // 渲染書籤頁面 (依首字母 A-Z 排序)
   renderBookmarksSection: function() {
     const markedList = document.getElementById("bookmarked-drugs-list");
     const emptyView = document.getElementById("bookmarks-empty-view");
     markedList.innerHTML = "";
 
-    const bookmarkedDrugs = EMTP_DRUGS.filter(d => this.state.bookmarks.includes(d.id));
-    bookmarkedDrugs.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
-
-    if (bookmarkedDrugs.length === 0) {
+    if (this.state.bookmarks.length === 0) {
       emptyView.style.display = "flex";
       markedList.style.display = "none";
-    } else {
-      emptyView.style.display = "none";
-      markedList.style.display = "grid";
-
-      bookmarkedDrugs.forEach(drug => {
-        const card = document.createElement("div");
-        card.className = `drug-card ${drug.highAlert ? 'high-alert' : ''}`;
-        card.innerHTML = `
-          <div class="card-header">
-            <div class="drug-names">
-              <h3>${drug.nameEn}</h3>
-              <div class="zh-name">${drug.nameZh}</div>
-            </div>
-            <span class="alert-badge">高警訊</span>
-          </div>
-          <div class="card-body">
-            <div class="brand-label">商品名: ${drug.brandName}</div>
-            <span class="card-tag">${drug.categoryZh.split(' / ')[0]}</span>
-          </div>
-          <div class="card-footer">
-            <div class="dosage-peek">${drug.dosage.split('\n')[0].replace('• ', '')}</div>
-            <button class="bookmark-btn active" data-drug-id="${drug.id}">
-              <i class="fa-solid fa-star"></i>
-            </button>
-          </div>
-        `;
-
-        card.addEventListener("click", (e) => {
-          if (!e.target.closest(".bookmark-btn")) {
-            this.showDrugDetail(drug.id);
-          }
-        });
-
-        const bookBtn = card.querySelector(".bookmark-btn");
-        bookBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          this.toggleBookmark(drug.id, bookBtn);
-        });
-
-        markedList.appendChild(card);
-      });
-    }
-
-    // 渲染心得列表
-    const notesContainer = document.getElementById("saved-notes-list");
-    notesContainer.innerHTML = "";
-
-    const notesIds = Object.keys(this.state.notes);
-    notesIds.sort((a, b) => {
-      const drugA = EMTP_DRUGS.find(d => d.id === a);
-      const drugB = EMTP_DRUGS.find(d => d.id === b);
-      if (!drugA) return 1;
-      if (!drugB) return -1;
-      return drugA.nameEn.localeCompare(drugB.nameEn);
-    });
-    
-    if (notesIds.length === 0) {
-      notesContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">目前尚無撰寫的臨床備忘錄。</p>`;
       return;
     }
 
-    notesIds.forEach(id => {
-      const drug = EMTP_DRUGS.find(d => d.id === id);
-      if (!drug) return;
+    emptyView.style.display = "none";
+    markedList.style.display = "grid";
 
-      const noteCard = document.createElement("div");
-      noteCard.className = "note-item-card";
-      noteCard.innerHTML = `
-        <div class="note-item-header">
-          <span class="note-item-title">${drug.nameEn} (${drug.nameZh})</span>
-          <button class="disclaimer-btn" onclick="app.showDrugDetail('${drug.id}')" style="color: var(--color-accent);">查看藥物</button>
+    // 獲取收藏的藥物實體並排序
+    const bookmarkedDrugs = EMTP_DRUGS.filter(d => this.state.bookmarks.includes(d.id));
+    bookmarkedDrugs.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
+
+    bookmarkedDrugs.forEach(drug => {
+      const noteText = this.state.notes[drug.id] || "";
+      const card = document.createElement("div");
+      card.className = `drug-card ${drug.highAlert ? 'high-alert' : ''}`;
+      card.innerHTML = `
+        <div class="card-header">
+          <div class="drug-names">
+            <h3>${drug.nameEn}</h3>
+            <div class="zh-name">${drug.nameZh}</div>
+          </div>
+          <span class="alert-badge">高警訊</span>
         </div>
-        <div class="note-item-body">${this.state.notes[id]}</div>
+        <div class="card-body">
+          <div class="brand-label">商品名: ${drug.brandName}</div>
+          <span class="card-tag">${drug.categoryZh.split(' / ')[0]}</span>
+        </div>
+        <div class="card-footer">
+          <div class="dosage-peek">${drug.dosage.split('\n')[0].replace('• ', '')}</div>
+          <button class="bookmark-btn active" data-drug-id="${drug.id}">
+            <i class="fa-solid fa-star"></i>
+          </button>
+        </div>
       `;
-      notesContainer.appendChild(noteCard);
+
+      card.addEventListener("click", (e) => {
+        if (!e.target.closest(".bookmark-btn")) {
+          this.showDrugDetail(drug.id);
+        }
+      });
+
+      const bookBtn = card.querySelector(".bookmark-btn");
+      bookBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        this.toggleBookmark(drug.id, bookBtn);
+      });
+
+      // 附加書籤頁的筆記卡片預覽
+      const container = document.createElement("div");
+      container.style.display = "flex";
+      container.style.flexDirection = "column";
+      container.style.gap = "8px";
+      container.appendChild(card);
+
+      if (noteText) {
+        const notePreview = document.createElement("div");
+        notePreview.className = "note-preview-badge";
+        notePreview.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> <strong>備忘錄提示：</strong><p>${noteText}</p>`;
+        container.appendChild(notePreview);
+      }
+
+      markedList.appendChild(container);
     });
   },
 
@@ -680,7 +656,7 @@ const app = {
     });
   },
 
-  // 精確執行劑量計算
+  // 執行臨床劑量計算
   calculateDosage: function() {
     const placeholder = document.getElementById("calc-results-placeholder");
     const display = document.getElementById("calc-results-display");
@@ -734,60 +710,54 @@ const app = {
           calculatedDose = props.maxPediatricDose;
         }
 
-        targetDoseEl.textContent = `${calculatedDose.toFixed(2)} ${unit} (推薦: ${props.pediatricOhcaDosePerKg} ${unit}/kg)`;
-
-        // 若有 mgPerMl 參數，換算 ml 體積
-        if (props.mgPerMl) {
-          let calculatedVol = calculatedDose / props.mgPerMl;
-          volumeLabelEl.textContent = "建議給藥體積 (容積)";
-          volumeEl.textContent = `${calculatedVol.toFixed(2)} mL`;
-        } else if (drug.id === "epinephrine") {
-          // Epinephrine 1:10000 為 0.1 mL/kg
-          let calculatedVol = 0.1 * weight;
-          volumeLabelEl.textContent = "建議 1:10,000 稀釋液體積";
-          volumeEl.textContent = `${calculatedVol.toFixed(1)} mL`;
+        // Epinephrine 特殊處理 (稀釋法體積計算)
+        if (drug.id === "epinephrine") {
+          const calculatedVol = props.pediatricOhcaVolPerKg * weight;
+          targetDoseEl.textContent = `${calculatedDose.toFixed(3)} mg (Epi 1:10,000)`;
+          volumeLabelEl.textContent = "稀釋液抽取容積 (1:10,000)";
+          volumeEl.innerHTML = `${calculatedVol.toFixed(1)} mL <span class="result-badge">原液 1mg 稀釋至 10mL 後抽取</span>`;
         } else {
-          volumeLabelEl.textContent = "給藥路徑";
-          volumeEl.textContent = "靜脈 / 骨內注射 (IV/IO)";
+          // 其他兒科有劑量計算的藥物
+          const mgPerMl = props.mgPerMl || 1;
+          const volMl = calculatedDose / mgPerMl;
+          targetDoseEl.textContent = `${calculatedDose.toFixed(2)} ${unit}`;
+          volumeLabelEl.textContent = "建議抽取注射容積";
+          volumeEl.innerHTML = `${volMl.toFixed(2)} mL <span class="result-badge">原液注射</span>`;
         }
-      } else {
-        // 該藥物無標準兒科劑量或兒科禁忌
-        targetDoseEl.textContent = "兒科院前不推薦或無推薦劑量";
-        targetDoseEl.className = "result-value danger";
-        volumeLabelEl.textContent = "安全警示";
-        volumeEl.textContent = "請遵循在線醫療控制醫師指示";
-        volumeEl.className = "result-value danger";
       }
-    } else {
+      else if (props.pediatricFirstDosePerKg) {
+        // Adenosine 兒科
+        const firstDose = props.pediatricFirstDosePerKg * weight;
+        const secondDose = props.pediatricSecondDosePerKg * weight;
+        const mgPerMl = props.mgPerMl;
+        
+        const fd = Math.min(firstDose, props.maxPediatricDose);
+        const sd = Math.min(secondDose, props.maxPediatricSecondDose);
+
+        targetDoseEl.innerHTML = `首劑: ${fd.toFixed(2)} mg<br>次劑: ${sd.toFixed(2)} mg`;
+        volumeLabelEl.textContent = "注射容積 (首劑 / 次劑)";
+        volumeEl.innerHTML = `${(fd/mgPerMl).toFixed(1)} mL / ${(sd/mgPerMl).toFixed(1)} mL <span class="result-badge">近端快速推注後沖水</span>`;
+      }
+      else {
+        targetDoseEl.textContent = "此藥物無預設兒科計算公式";
+        volumeLabelEl.textContent = "臨床建議";
+        volumeEl.textContent = "請參照兒科特殊情境說明手動調整。";
+      }
+    } 
+    else {
       // ===== 成人計算分支 =====
-      targetDoseEl.className = "result-value";
-      volumeEl.className = "result-value";
-
       if (props.type === "weight_bolus") {
-        // 依體重給予單次推注 (如 Fentanyl, Ketamine, Tramadol)
-        let calculatedDose = props.standardDosePerKg * weight;
-        let doseUnit = props.doseUnit;
+        // 依體重推注 (如 Midazolam, Tramadol)
+        const targetDose = props.standardDosePerKg * weight;
+        const finalDose = props.maxSingleDose ? Math.min(targetDose, props.maxSingleDose) : targetDose;
+        const volMl = finalDose / props.mgPerMl;
         
-        // 限制成人最大單次劑量
-        if (props.maxSingleDose && calculatedDose > props.maxSingleDose) {
-          calculatedDose = props.maxSingleDose;
-        }
-
-        targetDoseEl.textContent = `${calculatedDose.toFixed(1)} ${doseUnit} (${props.standardDosePerKg} ${doseUnit}/kg)`;
-        
-        // 劑量換算容積
-        if (props.mgPerMl) {
-          let finalDoseMg = doseUnit === "mcg" ? calculatedDose / 1000 : calculatedDose;
-          let calculatedVol = finalDoseMg / props.mgPerMl;
-          volumeLabelEl.textContent = "精確注射容積 (原液)";
-          volumeEl.textContent = `${calculatedVol.toFixed(2)} mL`;
-        } else {
-          volumeLabelEl.textContent = "途徑";
-          volumeEl.textContent = "慢速注射 / IM 肌肉注射";
-        }
+        targetDoseEl.textContent = `${finalDose.toFixed(1)} mg (${props.standardDosePerKg} mg/kg)`;
+        volumeLabelEl.textContent = "建議抽取注射容積";
+        volumeEl.innerHTML = `${volMl.toFixed(1)} mL <span class="result-badge">原液注射</span>`;
       } 
       else if (props.type === "weight_infusion" || props.type === "weight_infusion_and_pediatric") {
-        // 點滴維持輸注計算 (Epinephrine mcg/min)
+        // 連續滴注 (Epinephrine, Nitroglycerin)
         const userInfRate = parseFloat(document.getElementById("infusion-dose-rate").value) || 0;
         
         targetDoseEl.textContent = `${userInfRate} ${props.infusionUnit}`;
@@ -821,7 +791,7 @@ const app = {
   // ==================== 流程精靈資料庫 ====================
   protocolsData: {
     anaphylaxis: {
-      title: "成人致命性過敏傷病患救護流程",
+      title: "成人致命性過敏傷病患救護流程 (115.03.20 決議)",
       subtitle: "嘉義縣消防局緊急醫療救護協定對照",
       steps: [
         {
@@ -893,106 +863,93 @@ const app = {
           guidelines: "<strong>【註7: 初評之必要處置】</strong><br>1. 依情況考慮給予高濃度氧氣治療或以袋瓣式甦醒球 (BVM) 給予正壓通氣，並持續監測血氧濃度。<br>2. 如出現休克徵狀則考慮以大口徑靜脈留置針給予大量輸液。<br>3. 送醫途中必須持續監視心律。"
         }
       ]
-    },
-    acls: {
-      title: "ACLS 致命心律 (VF/pVT/PEA/Asystole) 演算法",
-      subtitle: "成人致命性心律緊急救護協定對照",
+    }
+    ,
+    arrhythmia: {
+      title: "成人緩脈與頻脈救護流程 (113.03 / 115.03 決議)",
+      subtitle: "嘉義縣消防局緊急醫療救護協定對照",
       steps: [
         {
-          label: "步驟 1: 確認 OHCA",
-          question: "患者心肺功能停止，CPR 啟動，分析心律：",
-          desc: "給予高濃度氧氣，裝上 AED / 去顫器進行心律分析。",
+          label: "步驟 1: 初步評估與心電圖",
+          question: "評估非創傷患者 (年齡 >= 18 歲)，主訴心律不整，並實施 12 導程 ECG 檢查：",
+          desc: "• <strong>初步處置</strong>：監視呼吸道(A)、呼吸(B)、循環(C)，必要時給氧維持 SpO2 >= 94% [註1]。<br>• <strong>心電圖判讀結果為？</strong>",
           choices: [
-            { text: "已準備好分析心律", nextStep: 1 }
+            { text: "緩脈 (心律 < 50 次/分)", nextStep: 1 },
+            { text: "頻脈 (心律 >= 150 次/分)", nextStep: 2 }
+          ],
+          guidelines: "<strong>【要旨與說明】</strong><br>1. 本操作流程之建議處置僅適用本局高級救護隊、專責救護隊或經認證之 EMT-P 操作，且操作人員之 ACLS 證照須維持於效期之內。<br>2. EMT-P 於初步評估時若發現病人且脈搏或心律次數 < 50 次/分 或 >= 150 次/分時，懷疑為心因性時即建議操作 12 導程心電圖後使用本流程操作進行。<br>3. 心律不整病人通常以「不穩定」及「有症狀」來描述。<br><strong>【註1: 相關急救處置如下】</strong><br>• 若呼吸道不通暢，考慮建立呼吸道，必要時給予抽吸。<br>• 必要時給氧，維持 SpO2 >= 94%。<br>• 若有設備，接上心律監視器，並操作 12 導程心電圖。"
+        },
+        {
+          label: "步驟 2: 緩脈不穩定評估",
+          question: "評估緩脈患者 (心律 < 50 次/分) 是否有【不穩定徵候】？",
+          desc: "檢查是否有以下任一徵候 [註2]：<br>1. 急性意識改變<br>2. 缺血性胸痛<br>3. 呼吸喘 (SpO2 < 90%) 或呼吸衰竭<br>4. 有典型休克徵象與症狀<br>5. 低血壓",
+          choices: [
+            { text: "是 (有不穩定徵候)", nextStep: 3 },
+            { text: "否 (穩定無不穩定徵候)", nextStep: 4 }
+          ],
+          guidelines: "<strong>【註2: 不穩定徵候定義】</strong><br>包括：一、急性意識改變；二、缺血性胸痛；三、呼吸喘(SpO2 < 90%)或呼吸衰竭；四、有典型休克徵象與症狀；五、低血壓。"
+        },
+        {
+          label: "步驟 2: 頻脈不穩定評估",
+          question: "評估頻脈患者 (心律 >= 150 次/分) 是否有【不穩定徵候】？",
+          desc: "檢查是否有以下任一徵候 [註2]：<br>1. 急性意識改變<br>2. 缺血性胸痛<br>3. 呼吸喘 (SpO2 < 90%) 或呼吸衰竭<br>4. 有典型休克徵象與症狀<br>5. 低血壓",
+          choices: [
+            { text: "是 (有不穩定徵候)", nextStep: 5 },
+            { text: "否 (穩定無不穩定徵候)", nextStep: 6 }
+          ],
+          guidelines: "<strong>【註2: 不穩定徵候定義】</strong><br>包括：一、急性意識改變；二、缺血性胸痛；三、呼吸喘(SpO2 < 90%)或呼吸衰竭；四、有典型休克徵象與症狀；五、低血壓。"
+        },
+        {
+          label: "步驟 3: 緩脈不穩定處置 (Atropine / TCP)",
+          question: "緩脈不穩定，準備執行給藥或起搏器：",
+          desc: "• <strong>尋求線上醫療指導使用 Atropine 或經皮心臟節律器 TCP</strong> [註3]。<br>• <strong>Atropine 使用方法</strong>：初始劑量 1 mg 靜脈推注，每 3-5 分鐘可重複施打，最大總量不超過 3 mg。<br>• <strong>注意 Atropine 禁忌症</strong>（如 ACS、青光眼、QRS > 0.12 秒等）。",
+          choices: [
+            { text: "處置完成，進入送醫流程", nextStep: 8 }
+          ],
+          guidelines: "<strong>【註3: Atropine 與 TCP 說明】</strong><br><strong>Atropine 禁忌症：</strong><br>1. 經群組判讀為急性冠心症 (ACS) 患者。<br>2. 對 Atropine 過敏。<br>3. 有青光眼。<br>4. 心臟移植患者可能無效。<br>5. QRS > 0.12 秒。<br><strong>經皮心臟節律器 (TCP) 注意事項：</strong><br>1. 操作前向患者或家屬做適當解釋，待其同意後再尋求線上醫療指導。<br>2. <strong>評估脈搏應摸「股動脈」來確認機械性擷取</strong>；不可評估頸動脈，因電刺激會造成可能類似頸動脈搏動的肌肉抽動。<br>3. 心律調節時間過長 (超過 30 分鐘) 可能會導致灼傷。"
+        },
+        {
+          label: "步驟 3: 穩定緩脈送醫",
+          question: "緩脈患者穩定無不穩定徵候：",
+          desc: "目前無需特殊給藥或起搏處置。進入送醫照護流程。",
+          choices: [
+            { text: "進入送醫流程", nextStep: 8 }
           ]
         },
         {
-          label: "步驟 2: 心律分析",
-          question: "去顫器分析心律，結果是否為可電擊心律 (Shockable)？",
-          desc: "• <strong>可電擊心律</strong>：心室顫動 (VF) 或無脈搏心室心搏過速 (pVT)。<br>• <strong>不可電擊心律</strong>：心搏停止 (Asystole) 或無脈搏電活動 (PEA)。",
+          label: "步驟 3: 不穩定頻脈處置 (同步整流)",
+          question: "頻脈不穩定，準備進行同步心臟整流：",
+          desc: "• <strong>尋求線上醫療指導進行同步心臟整流</strong> [註5]。<br>• 進行同步整流前應向患者或家屬給予適當之說明。<br>• 同步整流能量應依線上醫療指導指示之能量。<br>• 2025 AHA 建議同步整流能量原則，QRS 寬且規律：100 焦耳。",
           choices: [
-            { text: "是 (VF / pVT 可電擊)", nextStep: 2 },
-            { text: "否 (Asystole / PEA 不可電擊)", nextStep: 4 }
+            { text: "整流完成，進入送醫流程", nextStep: 8 }
+          ],
+          guidelines: "<strong>【註5: 同步心臟整流說明】</strong><br>若患者心電圖依「嘉義縣院前 EKG 群組」判讀為心室頻脈 (VT) 且有不穩定徵候，器材允許下得考慮尋求線上醫療指導後始進行同步心臟整流。同步整流操作流程依各電擊器規範所定，EMT-P 應熟悉相關操作，指導醫師得不定期前往考核。若有使用同步心臟整流，應將情形紀錄於救護紀錄表中。"
+        },
+        {
+          label: "步驟 3: 穩定頻脈評估 (QRS 寬度)",
+          question: "評估頻脈患者的 QRS 寬度：",
+          desc: "是否為寬的 QRS 波 (QRS 寬度 >= 0.12 秒)？",
+          choices: [
+            { text: "是 (QRS >= 0.12 秒)", nextStep: 8 },
+            { text: "否 (QRS < 0.12 秒 / 疑似 PSVT/SVT)", nextStep: 7 }
           ]
         },
         {
-          label: "步驟 3: 電擊與 CPR (Shockable)",
-          question: "執行電擊，並立即繼續 CPR：",
-          desc: "• <strong>電擊去顫</strong>：給予 1 次電擊，電擊後立即繼續 CPR，不要評估心律。<br>• <strong>建立血管路徑</strong>：進行靜脈 (IV) 或骨內針 (IO) 建立。<br>• <strong>給藥時機 (Epi)</strong>：在第 2 次電擊後，CPR 期間給予 <strong>Epinephrine 1mg IV/IO</strong>，之後每 3 - 5 分鐘給予一次。",
+          label: "步驟 4: 迷走神經刺激術",
+          question: "窄 QRS 且穩定頻脈，考慮迷走神經刺激術：",
+          desc: "• <strong>環境允許下得考慮進行迷走神經刺激術</strong> [註4]：<br>1. 請病人試著**咳嗽**。<br>2. 請病人試著**憋氣後腹部用力**（每次不超過 10 秒）。<br>3. 使用 **Modified Valsalva Maneuver**。<br>• 若使用迷走神經刺激術，需記錄在救護紀錄表中。",
           choices: [
-            { text: "仍為 Shockable 心律 (電擊 3 次後仍持續)", nextStep: 3 },
-            { text: "心律改變 / ROSC (恢復自主心跳)", nextStep: 5 }
-          ]
+            { text: "處置完成，進入送醫流程", nextStep: 8 }
+          ],
+          guidelines: "<strong>【註4: Modified Valsalva 操作細節】</strong><br>1. 使用 10 c.c 針筒吹氣 15 秒。<br>2. 把病人躺平後，再把腳抬高 45 度約 15 秒。<br>3. 將病人腳放平後，再監測是否回復竇性心律。"
         },
         {
-          label: "步驟 4: 抗心律不整藥物",
-          question: "頑固性 VF/pVT 處置：",
-          desc: "• <strong>給予 Amiodarone</strong>：首劑 <strong>300 mg IV/IO</strong> 快速推注。若仍持續，次劑可給予 150 mg。<br>• <strong>替代藥物 Lidocaine</strong>：若無 Amiodarone，給予 Lidocaine 首劑 1.0 - 1.5 mg/kg IV/IO。<br>• <strong>排除尖端扭轉型室速 (TdP)</strong>：若為 TdP 則給予 <strong>Magnesium Sulfate 1 - 2 g IV/IO</strong>。<br>• 持續尋找可逆原因 (5H5T)。",
-          choices: [
-            { text: "繼續急救，重新分析心律", nextStep: 1 },
-            { text: "恢復自主心跳 (ROSC)", nextStep: 5 }
-          ]
-        },
-        {
-          label: "步驟 5: 非電擊心律處置 (PEA/Asystole)",
-          question: "不可電擊心律處置：",
-          desc: "• <strong>立即繼續 CPR</strong> 2 分鐘。<br>• <strong>儘速給予 Epinephrine 1mg IV/IO</strong>，每 3 - 5 分鐘給予一次。<br>• 考慮建立進階氣道與二氧化碳監測 (EtCO2)。<br>• 積極尋找並排除可逆原因：低體溫、低血容、酸中毒、高/低血鉀、張力性氣胸、心包填塞、毒物、血栓等。",
-          choices: [
-            { text: "2 分鐘 CPR 結束，重新分析心律", nextStep: 1 },
-            { text: "恢復自主心跳 (ROSC)", nextStep: 5 }
-          ]
-        },
-        {
-          label: "ROSC 復甦後照護",
-          question: "患者恢復自主心跳 (ROSC)！進入後續照護：",
-          desc: "• <strong>呼吸管理</strong>：維持 SpO2 92 - 98%，評估氣管插管。<br>• <strong>血壓控制</strong>：維持收縮壓 > 90 mmHg (必要時給予 Epinephrine 點滴輸注)。<br>• <strong>心電圖監測</strong>：做 12 導程 ECG 評估是否為 STEMI 送往適當醫院。<br>• 執行目標溫度管理 (TTM)。",
+          label: "送醫照護與監測",
+          question: "執行送醫照護流程：",
+          desc: "• <strong>施行必要處置</strong>：1. 依評估施行必要之處置。 2. 全程監視心律且密切注意患者生命徵象。<br>• <strong>建立靜脈輸液</strong>：視情況於送醫途中建立靜脈輸液 [註6]。",
           choices: [],
-          recommendation: "進入 ROSC 照護，維持器官灌流，持續監測生命徵象送醫。"
-        }
-      ]
-    },
-    brady: {
-      title: "症狀性心搏過緩演算法",
-      subtitle: "成人心率 < 50 bpm 處置對照",
-      steps: [
-        {
-          label: "步驟 1: 臨床評估",
-          question: "患者心率低於 50 bpm，進行初步臨床評估：",
-          desc: "評估患者是否有以下【血液動力學不穩定】的症狀？<br>1. 低血壓 (Hypotension)<br>2. 急性神智改變 (Altered Mental Status)<br>3. 休克徵象 (Signs of Shock)<br>4. 缺血性胸痛 (Ischemic Chest Pain)<br>5. 急性心力衰竭 (Acute Heart Failure)",
-          choices: [
-            { text: "是 (有上述任何一項不穩定狀況)", nextStep: 1 },
-            { text: "否 (血液動力學穩定，無上述症狀)", nextStep: 3 }
-          ]
-        },
-        {
-          label: "步驟 2: 第一線藥物治療",
-          question: "給予首劑抗膽鹼藥物治療：",
-          desc: "• <strong>給予 Atropine 1mg IV/IO</strong> 快速推注。<br>• 持續給予氧氣、監測 ECG、血壓與血氧。<br>• 注意：若為二度二期 (Mobitz II) 或三度房室阻滯伴寬 QRS 波，Atropine 通常無效，應儘速考慮起搏器。",
-          choices: [
-            { text: "Atropine 有效且症狀改善", nextStep: 4 },
-            { text: "Atropine 無效，症狀持續不穩定", nextStep: 2 }
-          ]
-        },
-        {
-          label: "步驟 3: 二線處置 (起搏與升壓藥)",
-          question: "Atropine 無效，啟動二線處置：",
-          desc: "以下處置可同步或選擇執行：<br>1. <strong>經皮心臟起搏器 (TCP)</strong>：立即裝設並啟動心外節律器。<br>2. <strong>Epinephrine 點滴輸注</strong>：以 2 - 10 mcg/min IV/IO 連續輸注，依血壓調整滴速。<br>3. <strong>Dopamine 點滴輸注</strong>：以 5 - 20 mcg/kg/min IV/IO 輸注。",
-          choices: [],
-          recommendation: "立即啟動經皮起搏 (Pacing) 或給予腎上腺素點滴輸注，持續監測並準備後送。"
-        },
-        {
-          label: "穩定狀態觀察",
-          question: "患者血液動力學穩定：",
-          desc: "目前無需給予急救藥物或起搏處置。請持續監測心律、血壓，建立靜脈通路，進行 12 導程心電圖檢查，並常規送醫評估。",
-          choices: [],
-          recommendation: "持續觀察生命徵象，做好隨時病情變化之急救準備。"
-        },
-        {
-          label: "治療成功",
-          question: "心搏過緩已得到有效控制：",
-          desc: "患者心率已恢復，不穩定症狀改善。請在送醫途中持續監視心電圖、血壓與呼吸狀態，防範心搏過緩再次復發。",
-          choices: [],
-          recommendation: "維持靜脈通路與持續心電圖監視，送醫交付醫療團隊。"
+          recommendation: "送醫途中全時監視心律，密切注意患者生命徵象變化。若有使用 Atropine 或 TCP，應將情形紀錄於救護紀錄表中。",
+          guidelines: "<strong>【註6: 送醫說明】</strong><br>病人症狀可能隨時惡化或改變，送醫途中應全時監視心律，並注意患者生命徵象是否改變，得考慮於送醫途中建立靜脈輸液。"
         }
       ]
     }
@@ -1027,7 +984,7 @@ const app = {
       }
     });
 
-    // 啟動首次渲染
+    // 啟動首次渲染，預設維持過敏流程
     this.resetWizard();
   },
 
@@ -1239,11 +1196,11 @@ const app = {
           this.handleQuizAnswer(idx);
         }
       });
-
+      
       optionsContainer.appendChild(btn);
     });
 
-    // 隱藏解析與下一步按鈕
+    // 隱藏反饋與下一步按鈕
     document.getElementById("quiz-feedback-box").style.display = "none";
     document.getElementById("next-quiz-btn").style.display = "none";
     qState.selectedAnswerIndex = null;
@@ -1252,9 +1209,8 @@ const app = {
   // 處理答題
   handleQuizAnswer: function(selectedIndex) {
     const qState = this.state.quiz;
-    const currentQ = qState.questions[qState.currentIndex];
     qState.selectedAnswerIndex = selectedIndex;
-
+    const currentQ = qState.questions[qState.currentIndex];
     const optionButtons = document.querySelectorAll("#quiz-options-container .option-btn");
     
     // 答對或答錯的視覺效果
