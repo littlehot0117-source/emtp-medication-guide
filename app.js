@@ -100,15 +100,15 @@ const app = {
       explanation: "Naloxone (納洛酮) 為阿片類藥物（海洛因、嗎啡、芬太尼等）的特異性競爭性拮抗劑，能迅速逆轉呼吸抑制。"
     },
     {
-      question: "在高血鉀引發致命性心律不整（如心電圖正弦波形）的 OHCA 現場，給予何種藥物可以最快發揮穩定心肌細胞膜的作用？",
+      question: "下列何者為 Midazolam (導美康) 用於持續性癲癇重積狀態的成人常規首劑給藥劑量與途徑？",
       options: [
-        "10% Calcium Chloride (氯化鈣)",
-        "Sodium Bicarbonate (碳酸氫鈉)",
-        "Amiodarone (臟安)",
-        "Epinephrine (腎上腺素)"
+        "2.5 - 5 mg 緩慢靜脈注射 (IV) 或 5 - 10 mg 肌肉注射 (IM)",
+        "15 mg 快速靜脈推注 (IV)",
+        "0.1 mg 緩慢靜脈注射 (IV)",
+        "0.5 mg 肌肉注射 (IM)"
       ],
       correctIndex: 0,
-      explanation: "鈣離子（如 10% 氯化鈣）能迅速穩定心肌細胞膜電位，拮抗高血鉀引起的心臟毒性，一般於 2-5 分鐘內起效。"
+      explanation: "Midazolam 用於成人癲癇發作時，常規劑量為 2.5 - 5 mg 緩慢靜脈推注 (IV)；或使用 5 - 10 mg 肌肉注射 (IM) 或鼻腔給藥 (IN)。"
     },
     {
       question: "兒科心肺功能停止 (OHCA) 現場給予 Epinephrine (1:10,000) 的靜脈/骨內注射劑量為何？",
@@ -122,15 +122,15 @@ const app = {
       explanation: "兒科 CPR 的腎上腺素劑量為 0.01 mg/kg。若使用 1:10,000 稀釋液（0.1 mg/mL），對應容積即為 0.1 mL/kg。"
     },
     {
-      question: "有關 Magnesium Sulfate (硫酸鎂) 在心肺停止現場的適應症，主要是針對哪一種心律不整？",
+      question: "關於 Tramadol (曲馬多) 在本院前救護常規中的使用途徑與配製，下列何者正確？",
       options: [
-        "心室顫動 (VF)",
-        "尖端扭轉型心室心搏過速 (Torsades de Pointes / TdP)",
-        "無脈搏電活動 (PEA)",
-        "心搏停止 (Asystole)"
+        "院前僅限行深部肌肉注射 (IM)，且不需稀釋",
+        "必須稀釋至 10 mL 行快速靜脈推注 (IV)",
+        "與生理食鹽水混合行點滴連續滴注 (IV Infusion)",
+        "為了加速起效，首選骨內針路徑 (IO) 給藥"
       ],
-      correctIndex: 1,
-      explanation: "硫酸鎂是治療尖端扭轉型心室心搏過速 (TdP) 的首選藥物，能穩定心肌細胞膜，防止致命的心室顫動發生。"
+      correctIndex: 0,
+      explanation: "根據本院前救護協定，為了防範靜脈推注速度過快引發嚴重的噁心、嘔吐與低血壓，Tramadol 僅限行深部肌肉注射 (IM)，不需稀釋直接原液注射。"
     }
   ],
 
@@ -362,6 +362,9 @@ const app = {
       return matchesCategory && matchesSearch;
     });
 
+    // 依英文首字母順序排列
+    filteredDrugs.sort((a, b) => a.nameEn.localeCompare(b.nameEn));
+
     if (filteredDrugs.length === 0) {
       listContainer.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
@@ -390,7 +393,7 @@ const app = {
           <span class="card-tag">${drug.categoryZh.split(' / ')[0]}</span>
         </div>
         <div class="card-footer">
-          <div class="dosage-peek">${drug.adultDosage.split('\n')[0].replace('• ', '')}</div>
+          <div class="dosage-peek">${drug.dosage.split('\n')[0].replace('• ', '')}</div>
           <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-drug-id="${drug.id}">
             <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
           </button>
@@ -458,9 +461,10 @@ const app = {
       alertBadge.style.display = "none";
     }
 
-    document.getElementById("modal-drug-mechanism").textContent = drug.mechanism;
-    document.getElementById("modal-drug-adult").textContent = drug.adultDosage;
-    document.getElementById("modal-drug-pediatric").textContent = drug.pediatricDosage;
+    document.getElementById("modal-drug-dosage").textContent = drug.dosage;
+    document.getElementById("modal-drug-route").textContent = drug.route;
+    document.getElementById("modal-drug-interval").textContent = drug.interval;
+    document.getElementById("modal-drug-pediatric").textContent = drug.pediatricSpecial;
     document.getElementById("modal-drug-prep").textContent = drug.preparation;
 
     // 填充清單型資料
@@ -522,7 +526,7 @@ const app = {
             <span class="card-tag">${drug.categoryZh.split(' / ')[0]}</span>
           </div>
           <div class="card-footer">
-            <div class="dosage-peek">${drug.adultDosage.split('\n')[0].replace('• ', '')}</div>
+            <div class="dosage-peek">${drug.dosage.split('\n')[0].replace('• ', '')}</div>
             <button class="bookmark-btn active" data-drug-id="${drug.id}">
               <i class="fa-solid fa-star"></i>
             </button>
@@ -557,6 +561,7 @@ const app = {
       if (!drugB) return -1;
       return drugA.nameEn.localeCompare(drugB.nameEn);
     });
+    
     if (notesIds.length === 0) {
       notesContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">目前尚無撰寫的臨床備忘錄。</p>`;
       return;
@@ -660,7 +665,9 @@ const app = {
     const select = document.getElementById("calc-drug-select");
     select.innerHTML = `<option value="">-- 請選擇藥物 --</option>`;
     
-    EMTP_DRUGS.forEach(drug => {
+    const sortedDrugs = [...EMTP_DRUGS].sort((a, b) => a.nameEn.localeCompare(b.nameEn));
+    
+    sortedDrugs.forEach(drug => {
       const opt = document.createElement("option");
       opt.value = drug.id;
       opt.textContent = `${drug.nameEn} (${drug.nameZh})`;
@@ -704,9 +711,9 @@ const app = {
     const props = drug.calcProps;
     if (!props) {
       // 固定的藥物 (例如 Aspirin)
-      targetDoseEl.textContent = drug.adultDosage;
+      targetDoseEl.textContent = drug.dosage;
       volumeLabelEl.textContent = "給藥途徑";
-      volumeEl.textContent = "口服嚼服";
+      volumeEl.textContent = "口服口含";
       return;
     }
 
@@ -715,7 +722,7 @@ const app = {
       // ===== 兒科計算分支 =====
       if (props.pediatricOhcaDosePerKg) {
         let calculatedDose = props.pediatricOhcaDosePerKg * weight;
-        let unit = drug.id === "sodium_bicarb" ? "mEq" : "mg";
+        let unit = "mg";
         
         // 限幅最大兒科劑量
         if (props.maxPediatricDose && calculatedDose > props.maxPediatricDose) {
@@ -752,7 +759,7 @@ const app = {
       volumeEl.className = "result-value";
 
       if (props.type === "weight_bolus") {
-        // 依體重給予單次靜脈推注 (如 Fentanyl 1.5 mcg/kg, Ketamine 1.5 mg/kg)
+        // 依體重給予單次推注 (如 Fentanyl, Ketamine, Tramadol)
         let calculatedDose = props.standardDosePerKg * weight;
         let doseUnit = props.doseUnit;
         
@@ -771,44 +778,35 @@ const app = {
           volumeEl.textContent = `${calculatedVol.toFixed(2)} mL`;
         } else {
           volumeLabelEl.textContent = "途徑";
-          volumeEl.textContent = "IV/IO 慢速注射";
+          volumeEl.textContent = "慢速注射 / IM 肌肉注射";
         }
       } 
       else if (props.type === "weight_infusion" || props.type === "weight_infusion_and_pediatric") {
-        // 點滴維持輸注計算 (Dopamine mcg/kg/min, Epinephrine mcg/min)
+        // 點滴維持輸注計算 (Epinephrine mcg/min)
         const userInfRate = parseFloat(document.getElementById("infusion-dose-rate").value) || 0;
         
         targetDoseEl.textContent = `${userInfRate} ${props.infusionUnit}`;
         
         // 計算滴速
-        // Dopamine 公式: Rate(mL/hr) = (mcg/kg/min * kg * 60 min) / 濃度(mcg/mL)
-        // Epinephrine 公式: Rate(mL/hr) = (mcg/min * 60 min) / 濃度(mcg/mL)
         let rateMlHr = 0;
         let concentrationMcgMl = 0;
 
-        if (drug.id === "dopamine") {
-          concentrationMcgMl = 800; // 200mg in 250ml = 800mcg/ml
-          rateMlHr = (userInfRate * weight * 60) / concentrationMcgMl;
-        } else if (drug.id === "epinephrine") {
+        if (drug.id === "epinephrine") {
           concentrationMcgMl = 4; // 1mg in 250ml = 4mcg/ml
           rateMlHr = (userInfRate * 60) / concentrationMcgMl;
         } else if (drug.id === "nitroglycerin") {
           concentrationMcgMl = 200; // 50mg in 250ml = 200mcg/ml
           rateMlHr = (userInfRate * 60) / concentrationMcgMl;
-        } else if (drug.id === "lidocaine") {
-          concentrationMcgMl = 4000; // 1g in 250ml = 4mg/ml = 4000mcg/ml
-          rateMlHr = (userInfRate * weight * 60) / concentrationMcgMl;
         }
 
-        // 精密微量滴數 (60 gtt/mL) 時, mL/hr = drops/min (gtt/min)
         const dropsMin = rateMlHr;
 
         volumeLabelEl.textContent = "滴速計算結果 (精密輸液 60 gtt/mL)";
         volumeEl.innerHTML = `${rateMlHr.toFixed(1)} mL/hr <span class="result-badge">${dropsMin.toFixed(0)} 滴/分</span>`;
       } 
       else {
-        // 剩餘的是固定成人給藥的藥物
-        targetDoseEl.textContent = drug.adultDosage.split('\n')[0].replace('• ', '');
+        // 固定成人給藥的藥物
+        targetDoseEl.textContent = drug.dosage.split('\n')[0].replace('• ', '');
         volumeLabelEl.textContent = "臨床提示";
         volumeEl.textContent = "固定劑量給藥，不需依體重調整";
       }
@@ -858,7 +856,6 @@ const app = {
 
   // 開始測驗
   startQuiz: function() {
-    // 隨機洗牌，選 10 題
     const shuffled = [...this.quizPool].sort(() => 0.5 - Math.random());
     this.state.quiz = {
       active: true,

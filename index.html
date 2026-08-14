@@ -241,7 +241,7 @@
                   <div class="node-title">若為 VF/pVT 持續 (電擊 3 次後)</div>
                   <div class="node-desc">
                     首選抗心律不整藥：<span class="drug-link" onclick="app.showDrugDetail('amiodarone')">Amiodarone (首劑 300 mg / 次劑 150 mg)</span>
-                    <br>或使用替代藥物：<span class="drug-link" onclick="app.showDrugDetail('lidocaine')">Lidocaine (1.0 - 1.5 mg/kg)</span>
+                    <br>或使用替代藥物：Lidocaine (1.0 - 1.5 mg/kg)
                   </div>
                 </div>
 
@@ -250,8 +250,8 @@
                 <div class="flow-node">
                   <div class="node-title">特殊情況排除</div>
                   <div class="node-desc">
-                    尖端扭轉型室速 (TdP) 給予 <span class="drug-link" onclick="app.showDrugDetail('magnesium_sulfate')">Magnesium Sulfate (1-2 g)</span>
-                    <br>酸血症/高血鉀給予 <span class="drug-link" onclick="app.showDrugDetail('sodium_bicarb')">NaHCO3 (1 mEq/kg)</span>
+                    尖端扭轉型室速 (TdP) 給予 Magnesium Sulfate (1-2 g)
+                    <br>酸血症/高血鉀給予 NaHCO3 (1 mEq/kg)
                     <br>低血糖症給予 <span class="drug-link" onclick="app.showDrugDetail('glucose')">D50W (20-50 mL)</span>
                   </div>
                 </div>
@@ -293,7 +293,7 @@
                   <div class="node-title">若 Atropine 無效</div>
                   <div class="node-desc">
                     啟動經皮節律器 (TCP) 或
-                    <br>靜脈滴注：<span class="drug-link" onclick="app.showDrugDetail('dopamine')">Dopamine 輸注 (5-20 mcg/kg/min)</span>
+                    <br>靜脈滴注：Dopamine 輸注 (5-20 mcg/kg/min)
                     <br>或使用：<span class="drug-link" onclick="app.showDrugDetail('epinephrine')">Epinephrine 輸注 (2-10 mcg/min)</span>
                   </div>
                 </div>
@@ -397,15 +397,9 @@
           <span class="alert-badge" id="modal-drug-alert">高警訊藥物 (High Alert)</span>
         </div>
 
-        <!-- Mechanism -->
-        <div class="info-section">
-          <h4><i class="fa-solid fa-gears"></i> 藥理機轉</h4>
-          <div class="info-content" id="modal-drug-mechanism">--</div>
-        </div>
-
         <!-- Indications -->
         <div class="info-section">
-          <h4><i class="fa-solid fa-check-double"></i> 臨床適應症</h4>
+          <h4><i class="fa-solid fa-check-double"></i> 適應症</h4>
           <ul class="info-list" id="modal-drug-indications">
             <!-- List elements -->
           </ul>
@@ -419,21 +413,33 @@
           </ul>
         </div>
 
-        <!-- Adult Dosage -->
+        <!-- Dosage -->
         <div class="info-section">
-          <h4><i class="fa-solid fa-user"></i> 成人給藥劑量與途徑</h4>
-          <div class="info-content" id="modal-drug-adult">--</div>
+          <h4><i class="fa-solid fa-vial"></i> 藥物劑量</h4>
+          <div class="info-content" id="modal-drug-dosage">--</div>
         </div>
 
-        <!-- Pediatric Dosage -->
+        <!-- Route -->
         <div class="info-section">
-          <h4><i class="fa-solid fa-child"></i> 兒科給藥劑量與途徑</h4>
+          <h4><i class="fa-solid fa-route"></i> 藥物途徑</h4>
+          <div class="info-content" id="modal-drug-route">--</div>
+        </div>
+
+        <!-- Interval -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-clock"></i> 間隔時間</h4>
+          <div class="info-content" id="modal-drug-interval">--</div>
+        </div>
+
+        <!-- Pediatric Special -->
+        <div class="info-section">
+          <h4><i class="fa-solid fa-child"></i> 兒童特殊情境</h4>
           <div class="info-content" id="modal-drug-pediatric">--</div>
         </div>
 
-        <!-- Dilution Preparation -->
+        <!-- Preparation -->
         <div class="info-section">
-          <h4><i class="fa-solid fa-vial"></i> 配製與稀釋方法</h4>
+          <h4><i class="fa-solid fa-vial"></i> 稀釋配製方法</h4>
           <div class="info-content" id="modal-drug-prep">--</div>
         </div>
 
