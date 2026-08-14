@@ -382,6 +382,37 @@ const EMTP_DRUGS = [
       doseUnit: "mg/kg",
       maxSingleDose: 100
     }
+  },
+  {
+    id: "fenoterol",
+    nameEn: "Fenoterol (Berotec)",
+    nameZh: "備勞喘 / 芬諾特羅",
+    brandName: "Berotec MDI / Nebuliser solution",
+    category: "bronchodilator",
+    categoryZh: "短效吸入型支氣管擴張劑 (SABA)",
+    highAlert: false,
+    indications: [
+      "急性支氣管痙攣引起的呼吸困難（如氣喘、慢性阻塞性肺疾病 COPD 急性發作）"
+    ],
+    contraindications: [
+      "對 Fenoterol 或本藥其它成分過敏者",
+      "肥厚性阻塞性心肌病變 (HOCM)",
+      "快速性心律不整 (Tachyarrhythmia) 或心跳速率大於 150 次/分"
+    ],
+    dosage: "• 噴霧吸入：1瓶單一劑量 (0.5 mL 或 1.25 mg) 溶於生理食鹽水 (N/S) 至 4 mL 使用吸入器霧化吸入。若無效，間隔 5 分鐘後得使用第二瓶。\n• 自備吸入劑 (MDI)：協助吸入 2 劑 (吸入型短效支氣管擴張劑，Berotec MDI 100mcg/puff)。\n• 法定傳染病：考慮使用吸入型 MDI 2 劑，間隔 1 分鐘，送醫時間超 20 分鐘者每 20 分鐘可重複用藥。",
+    route: "霧化吸入 (Inhalation) / 定量吸入器 (MDI)",
+    interval: "• 霧化：首劑無效，間隔 5 分鐘給予第二劑。\n• MDI：間隔 1 分鐘吸入第二劑；送醫路程長每 20 分鐘重複一次。",
+    pediatricSpecial: "• 兒科急性氣喘發作：霧化吸入劑量，體重 < 22kg (約6歲以下) 每次給予 0.5 mL (1.25 mg) ；體重 >= 22kg 每次給予 1.0 mL (2.5 mg) 稀釋至 4 mL 霧化吸入。\n• MDI 協助：兒童依醫囑或協助吸入 1-2 劑，需配合吸藥輔助器 (Spacer) 使用最佳。",
+    preparation: "• 霧化：取備勞喘單一劑量吸入液 1 瓶（0.5 mL 內含 1.25 mg 活性成分），加入滅菌生理食鹽水 (NS) 稀釋至 4 mL，置於霧化器杯中吸入。\n• MDI：取下定量吸入器蓋子，搖勻後接上輔助器或對準口部，於吸氣開始時壓下閥門，並憋氣 10 秒以利吸收。",
+    precautions: [
+      "吸入後可能產生心悸、手部細微顫動、頭痛、噁心等 Beta-2 興奮劑常見副作用。",
+      "若患者心跳速率每分鐘大於 150 次，應避免使用該藥物，以免引發致命性心律不整。",
+      "對於有嚴重缺氧或併用其他 Xanthine 衍生物者，可能增加低血鉀風險，應密切監測呼吸與生命徵象。"
+    ],
+    calcProps: {
+      type: "fixed_dose",
+      standardAdultDose: "1 瓶 (0.5 mL) 霧化 / MDI 2 劑"
+    }
   }
 ];
 
