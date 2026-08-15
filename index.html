@@ -66,10 +66,22 @@
       <header class="top-bar">
         <h2 id="page-title">藥物電子書</h2>
         
-        <!-- Live Search Input -->
-        <div class="search-container" id="global-search-container">
-          <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="search-input" class="search-input" placeholder="搜尋英文/中文名、商品名...">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <!-- Mobile accessibility actions -->
+          <div class="mobile-actions" style="display: none; gap: 8px; margin-right: 4px;">
+            <button class="icon-action-btn" id="mobile-font-size-toggle" title="調整字體大小">
+              <i class="fa-solid fa-text-height"></i>
+            </button>
+            <button class="icon-action-btn" id="mobile-theme-toggle" title="切換主題">
+              <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+          </div>
+
+          <!-- Live Search Input -->
+          <div class="search-container" id="global-search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" class="search-input" placeholder="搜尋英文/中文名、商品名...">
+          </div>
         </div>
       </header>
 

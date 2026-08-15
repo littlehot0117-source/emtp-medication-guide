@@ -305,20 +305,36 @@ const app = {
       });
     });
 
-    // 主題切換按鈕
+    // 主題切換按鈕 (支援桌機與手機)
     const themeBtn = document.getElementById("theme-toggle");
-    themeBtn.addEventListener("click", () => {
+    const mobileThemeBtn = document.getElementById("mobile-theme-toggle");
+    
+    const handleThemeToggle = () => {
       const html = document.documentElement;
       const currentTheme = html.getAttribute("data-theme");
       const newTheme = currentTheme === "dark" ? "light" : "dark";
       
       html.setAttribute("data-theme", newTheme);
-      themeBtn.innerHTML = newTheme === "dark" 
-        ? '<i class="fa-solid fa-sun"></i> <span>切換主題</span>' 
-        : '<i class="fa-solid fa-moon"></i> <span>切換主題</span>';
+      
+      // 更新桌機按鈕內容
+      if (themeBtn) {
+        themeBtn.innerHTML = newTheme === "dark" 
+          ? '<i class="fa-solid fa-sun"></i> <span>切換主題</span>' 
+          : '<i class="fa-solid fa-moon"></i> <span>切換主題</span>';
+      }
+      
+      // 更新手機按鈕內容
+      if (mobileThemeBtn) {
+        mobileThemeBtn.innerHTML = newTheme === "dark"
+          ? '<i class="fa-solid fa-sun"></i>'
+          : '<i class="fa-solid fa-moon"></i>';
+      }
         
       this.showToast(`已切換為 ${newTheme === "dark" ? "深色" : "明亮"} 模式`);
-    });
+    };
+
+    if (themeBtn) themeBtn.addEventListener("click", handleThemeToggle);
+    if (mobileThemeBtn) mobileThemeBtn.addEventListener("click", handleThemeToggle);
   },
 
   // 搜尋功能初始化
@@ -2006,14 +2022,14 @@ const app = {
   // 無障礙字體大小初始化
   initAccessibility: function() {
     const toggleBtn = document.getElementById("font-size-toggle");
-    if (!toggleBtn) return;
+    const mobileToggleBtn = document.getElementById("mobile-font-size-toggle");
 
     // 從 LocalStorage 載入設定
     const savedFontSize = localStorage.getItem("emtp_font_size") || "normal";
     this.state.fontSize = savedFontSize;
     this.applyFontSize(savedFontSize, false); // 不彈出 toast
 
-    toggleBtn.addEventListener("click", () => {
+    const handleFontSizeToggle = () => {
       let nextSize = "normal";
       if (this.state.fontSize === "normal") {
         nextSize = "medium";
@@ -2024,26 +2040,33 @@ const app = {
       this.state.fontSize = nextSize;
       localStorage.setItem("emtp_font_size", nextSize);
       this.applyFontSize(nextSize, true);
-    });
+    };
+
+    if (toggleBtn) toggleBtn.addEventListener("click", handleFontSizeToggle);
+    if (mobileToggleBtn) mobileToggleBtn.addEventListener("click", handleFontSizeToggle);
   },
 
   // 套用字體大小設定
   applyFontSize: function(size, triggerToast = true) {
     const htmlEl = document.documentElement;
     const toggleBtn = document.getElementById("font-size-toggle");
+    const mobileToggleBtn = document.getElementById("mobile-font-size-toggle");
     
     htmlEl.classList.remove("font-size-medium", "font-size-large");
     
     if (size === "medium") {
       htmlEl.classList.add("font-size-medium");
       if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i> <span>字體：中級放大</span>';
+      if (mobileToggleBtn) mobileToggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>';
       if (triggerToast) this.showToast("已切換至中級放大字體 (115%)");
     } else if (size === "large") {
       htmlEl.classList.add("font-size-large");
       if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i> <span>字體：老花放大</span>';
+      if (mobileToggleBtn) mobileToggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus" style="color: var(--color-accent);"></i>';
       if (triggerToast) this.showToast("已啟動老花眼大字體模式 (135%)");
     } else {
       if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-text-height"></i> <span>字體：標準大小</span>';
+      if (mobileToggleBtn) mobileToggleBtn.innerHTML = '<i class="fa-solid fa-text-height"></i>';
       if (triggerToast) this.showToast("已切換回標準大小字體");
     }
   }

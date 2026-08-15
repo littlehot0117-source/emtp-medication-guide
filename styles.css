@@ -1257,6 +1257,10 @@ body {
     display: none;
   }
   
+  .mobile-actions {
+    display: flex !important;
+  }
+  
   .nav-menu {
     flex-direction: row;
     width: 100%;
@@ -1348,4 +1352,25 @@ html.font-size-medium {
 
 html.font-size-large {
   font-size: 135%; /* Scale all rem units by 35% for senior EMTs */
+}
+
+/* Mobile actions in header */
+.icon-action-btn {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.icon-action-btn:hover {
+  border-color: var(--color-primary);
+  background-color: var(--bg-hover);
 }
