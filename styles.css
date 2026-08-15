@@ -950,6 +950,18 @@ body {
   font-weight: bold;
 }
 
+.protocol-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity var(--transition-fast);
+}
+
+.protocol-link:hover {
+  opacity: 0.8;
+}
+
 /* Quiz Section */
 .quiz-container {
   max-width: 680px;
@@ -1327,4 +1339,13 @@ body {
   .wizard-choices-row {
     flex-direction: column;
   }
+}
+
+/* Accessibility Scaling for Presbyopia (老花眼適配) */
+html.font-size-medium {
+  font-size: 115%; /* Scale all rem units by 15% */
+}
+
+html.font-size-large {
+  font-size: 135%; /* Scale all rem units by 35% for senior EMTs */
 }

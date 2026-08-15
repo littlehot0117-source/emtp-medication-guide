@@ -22,7 +22,8 @@ const app = {
       protocolId: "anaphylaxis",
       currentStepIndex: 0,
       history: []
-    }
+    },
+    fontSize: "normal" // normal | medium | large
   },
 
   // 靜態測驗問題庫 (共 10 題，全數與 11 種保留藥物對齊)
@@ -150,6 +151,7 @@ const app = {
     this.initQuiz();
     this.initModals();
     this.checkFirstLoadDisclaimer();
+    this.initAccessibility();
     
     // 初始化計算器藥物下拉選單
     this.populateCalculatorDrugs();
@@ -850,7 +852,7 @@ const app = {
         {
           label: "心臟停止緊急救護",
           question: "立即啟動高品質 CPR 與心臟停止救護流程！",
-          desc: "病患已無呼吸與脈搏。請立即執行去顫電擊 (若適用)，並進入【非創傷病患心臟停止緊急救護流程】處置！",
+          desc: "病患已無呼吸與脈搏。請立即執行去顫電擊 (若適用)，並進入<span class='protocol-link' data-goto='ohca'>【非創傷病患心臟停止緊急救護流程】</span>處置！",
           choices: [],
           recommendation: "依非創傷 OHCA 協定急救。每 3-5 分鐘給予 Epinephrine 1mg IV/IO，積極尋找插管、給氧與心律轉復時機。"
         },
@@ -1232,9 +1234,9 @@ const app = {
         {
           label: "步驟 7: 啟動無脈搏流程",
           question: "患者摸不到頸動脈，立即轉入 OHCA 流程：",
-          desc: "• 患者已惡化為 OHCA。請立即轉入【成人無脈搏救護流程】！",
+          desc: "• 患者已惡化為 OHCA。請立即轉入<span class='protocol-link' data-goto='ohca'>【成人無脈搏救護流程】</span>！",
           choices: [],
-          recommendation: "依【成人無脈搏救護流程】進行急救與 AED 連接，並儘速後送送醫。"
+          recommendation: "依<span class='protocol-link' data-goto='ohca'>【成人無脈搏救護流程】</span>進行急救與 AED 連接，並儘速後送送醫。"
         },
         {
           label: "步驟 8: 送醫處置與後送",
@@ -1282,11 +1284,11 @@ const app = {
         {
           label: "步驟 4: Atropine 給藥治療",
           question: "符合嚴重中毒，尋求線上醫療指導給予解毒藥：",
-          desc: "• **給藥指引 (P)**：高級技術員經判斷疑似為嚴重有機磷、胺基甲酸鹽中毒時，得考慮進行線上醫療指導，給予 Atropine 治療 [註3]。<br>• **使用劑量**：起始劑量為 <strong>1 mg IV 注射</strong>。若症狀未有改善，可考慮 <strong>5 分鐘後再次給予 1 mg IV 注射</strong>。若皆無改善，則應循車內照護流程儘速送醫 [註3]。<br>• **癲癇處理 (P)**：若病患因農藥中毒引起癲癇重積症狀，EMT-P 可依據【抽搐流程】給予 Midazolam 治療 [註3]。",
+          desc: "• **給藥指引 (P)**：高級技術員經判斷疑似為嚴重有機磷、胺基甲酸鹽中毒時，得考慮進行線上醫療指導，給予 Atropine 治療 [註3]。<br>• **使用劑量**：起始劑量為 <strong>1 mg IV 注射</strong>。若症狀未有改善，可考慮 <strong>5 分鐘後再次給予 1 mg IV 注射</strong>。若皆無改善，則應循車內照護流程儘速送醫 [註3]。<br>• **癲癇處理 (P)**：若病患因農藥中毒引起癲癇重積症狀，EMT-P 可依據<span class='protocol-link' data-goto='seizure'>【抽搐流程】</span>給予 Midazolam 治療 [註3]。",
           choices: [
             { text: "給藥與處置完成，準備後送", nextStep: 4 }
           ],
-          guidelines: "<strong>【註3: 處置與 Atropine 治療】</strong><br>• 施行必要處置以維持患者呼吸道、呼吸及循環。<br>• Atropine 起始劑量為 1 mg IV 注射，若患者症狀未有改善，可考慮 5 分鐘後再次給予 Atropine 1 mg IV 注射。若皆無改善，則應循車內照護流程儘速送醫。<br>• 若患者因農藥中毒引起癲癇重積症狀，EMT-P 可依據【抽搐流程】給予 Midazolam 治療。"
+          guidelines: "<strong>【註3: 處置與 Atropine 治療】</strong><br>• 施行必要處置以維持患者呼吸道、呼吸及循環。<br>• Atropine 起始劑量為 1 mg IV 注射，若患者症狀未有改善，可考慮 5 分鐘後再次給予 Atropine 1 mg IV 注射。若皆無改善，則應循車內照護流程儘速送醫。<br>• 若患者因農藥中毒引起癲癇重積症狀，EMT-P 可依據<span class='protocol-link' data-goto='seizure'>【抽搐流程】</span>給予 Midazolam 治療。"
         },
         {
           label: "步驟 5: 必要處置與上擔架床",
@@ -1603,14 +1605,14 @@ const app = {
             { text: "是 (血糖 < 60 mg/dl)", nextStep: 2 },
             { text: "否 (血糖 >= 60 mg/dl，或未施測)", nextStep: 3 }
           ],
-          guidelines: "<strong>【註2: 血糖檢測安全與低血糖指引】</strong><br>1. 病人持續抽搐或評估有採血的困難，可不給予檢測血糖，以避免針扎的危險。<br>2. 血糖值 < 60mg/dl，請依【疑似低血糖流程】處置。"
+          guidelines: "<strong>【註2: 血糖檢測安全與低血糖指引】</strong><br>1. 病人持續抽搐或評估有採血的困難，可不給予檢測血糖，以避免針扎的危險。<br>2. 血糖值 < 60mg/dl，請依<span class='protocol-link' data-goto='hypoglycemia'>【疑似低血糖流程】</span>處置。"
         },
         {
           label: "步驟 3: 參考低血糖流程",
           question: "病患血糖值小於 60 mg/dl，進入低血糖流程：",
-          desc: "• 請立即轉入【成人疑似低血糖流程】處置！",
+          desc: "• 請立即轉入<span class='protocol-link' data-goto='hypoglycemia'>【成人疑似低血糖流程】</span>處置！",
           choices: [],
-          recommendation: "依【低血糖流程】嘗試建立靜脈給予 D10W 快速滴注或給予 D50W 靜脈推注。"
+          recommendation: "依<span class='protocol-link' data-goto='hypoglycemia'>【疑似低血糖流程】</span>嘗試建立靜脈給予 D10W 快速滴注或給予 D50W 靜脈推注。"
         },
         {
           label: "步驟 3: 評估是否持續抽搐",
@@ -1660,6 +1662,11 @@ const app = {
       this.resetWizard();
     });
 
+    const prevBtn = document.getElementById("wizard-btn-prev");
+    prevBtn.addEventListener("click", () => {
+      this.goBackWizard();
+    });
+
     const nextBtn = document.getElementById("wizard-btn-next");
     nextBtn.addEventListener("click", () => {
       const proto = this.protocolsData[this.state.wizard.protocolId];
@@ -1689,6 +1696,14 @@ const app = {
     document.getElementById("wizard-step-label").textContent = step.label;
     const progressPercent = Math.min(((stepIndex + 1) / proto.steps.length) * 100, 100);
     document.getElementById("wizard-progress-fill").style.width = `${progressPercent}%`;
+
+    // 更新上一步按鈕顯示狀態
+    const prevBtn = document.getElementById("wizard-btn-prev");
+    if (this.state.wizard.history.length > 0) {
+      prevBtn.style.display = "inline-block";
+    } else {
+      prevBtn.style.display = "none";
+    }
 
     // 更新問題/描述
     document.getElementById("wizard-question-title").innerHTML = step.question;
@@ -1778,6 +1793,33 @@ const app = {
     } else {
       guiBox.style.display = "none";
     }
+
+    // 綁定跨流程跳轉連結事件
+    const wizardBox = document.querySelector(".wizard-box");
+    if (wizardBox) {
+      const protoLinks = wizardBox.querySelectorAll(".protocol-link");
+      protoLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetProtoId = link.getAttribute("data-goto");
+          if (this.protocolsData[targetProtoId]) {
+            // 同步分頁按鈕的 active 狀態
+            const pills = document.querySelectorAll(".protocol-selector .filter-pill");
+            pills.forEach(pill => {
+              if (pill.getAttribute("data-protocol") === targetProtoId) {
+                pills.forEach(p => p.classList.remove("active"));
+                pill.classList.add("active");
+              }
+            });
+            
+            // 切換並重設
+            this.state.wizard.protocolId = targetProtoId;
+            this.resetWizard();
+            this.showToast(`已切換至 ${this.protocolsData[targetProtoId].title}`);
+          }
+        });
+      });
+    }
   },
 
   // 處理選項點擊
@@ -1785,6 +1827,15 @@ const app = {
     this.state.wizard.history.push(this.state.wizard.currentStepIndex);
     this.state.wizard.currentStepIndex = nextStepIndex;
     this.renderWizardStep();
+  },
+
+  // 返回上一步驟
+  goBackWizard: function() {
+    if (this.state.wizard.history.length > 0) {
+      const prevStepIndex = this.state.wizard.history.pop();
+      this.state.wizard.currentStepIndex = prevStepIndex;
+      this.renderWizardStep();
+    }
   },
 
   // 重設精靈
@@ -1949,6 +2000,51 @@ const app = {
       msgEl.textContent = `只獲得了 ${finalScore} 分。臨床給藥關乎人命，建議您細心研讀「藥物電子書」中的適應症與劑量，再次挑戰！`;
       trophyIcon.className = "fa-solid fa-circle-exclamation";
       trophyIcon.style.color = "#f43f5e"; // 警示
+    }
+  },
+
+  // 無障礙字體大小初始化
+  initAccessibility: function() {
+    const toggleBtn = document.getElementById("font-size-toggle");
+    if (!toggleBtn) return;
+
+    // 從 LocalStorage 載入設定
+    const savedFontSize = localStorage.getItem("emtp_font_size") || "normal";
+    this.state.fontSize = savedFontSize;
+    this.applyFontSize(savedFontSize, false); // 不彈出 toast
+
+    toggleBtn.addEventListener("click", () => {
+      let nextSize = "normal";
+      if (this.state.fontSize === "normal") {
+        nextSize = "medium";
+      } else if (this.state.fontSize === "medium") {
+        nextSize = "large";
+      }
+      
+      this.state.fontSize = nextSize;
+      localStorage.setItem("emtp_font_size", nextSize);
+      this.applyFontSize(nextSize, true);
+    });
+  },
+
+  // 套用字體大小設定
+  applyFontSize: function(size, triggerToast = true) {
+    const htmlEl = document.documentElement;
+    const toggleBtn = document.getElementById("font-size-toggle");
+    
+    htmlEl.classList.remove("font-size-medium", "font-size-large");
+    
+    if (size === "medium") {
+      htmlEl.classList.add("font-size-medium");
+      if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i> <span>字體：中級放大</span>';
+      if (triggerToast) this.showToast("已切換至中級放大字體 (115%)");
+    } else if (size === "large") {
+      htmlEl.classList.add("font-size-large");
+      if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i> <span>字體：老花放大</span>';
+      if (triggerToast) this.showToast("已啟動老花眼大字體模式 (135%)");
+    } else {
+      if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-text-height"></i> <span>字體：標準大小</span>';
+      if (triggerToast) this.showToast("已切換回標準大小字體");
     }
   }
 };

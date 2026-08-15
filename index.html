@@ -49,7 +49,10 @@
       </div>
 
       <div class="sidebar-footer">
-        <button class="theme-toggle-btn" id="theme-toggle">
+        <button class="theme-toggle-btn" id="font-size-toggle" style="margin-bottom: 8px;">
+          <i class="fa-solid fa-text-height"></i> <span>字體：標準大小</span>
+        </button>
+        <button class="theme-toggle-btn" id="theme-toggle" style="margin-bottom: 8px;">
           <i class="fa-solid fa-sun"></i> <span>切換主題</span>
         </button>
         <button class="disclaimer-btn" id="open-disclaimer-btn">免責聲明</button>
@@ -266,8 +269,11 @@
                 </div>
 
                 <!-- Control Buttons -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 16px;">
-                  <button class="filter-pill" id="wizard-btn-reset" style="padding: 8px 16px;"><i class="fa-solid fa-rotate-left"></i> 重設流程</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; gap: 12px;">
+                  <div style="display: flex; gap: 8px;">
+                    <button class="filter-pill" id="wizard-btn-reset" style="padding: 8px 16px;"><i class="fa-solid fa-rotate-left"></i> 重設</button>
+                    <button class="filter-pill" id="wizard-btn-prev" style="padding: 8px 16px; display: none;"><i class="fa-solid fa-chevron-left"></i> 上一步</button>
+                  </div>
                   <button class="next-quiz-btn" id="wizard-btn-next" style="display: none; padding: 10px 24px; border-radius: 10px;">繼續 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
 
