@@ -1,0 +1,108 @@
+=== Drug ID: epinephrine ===
+  nameEn: "Epinephrine",
+  nameZh: "腎上腺素",
+  dosage: "• OHCA: 1 mg IV/IO\n• 過敏性休克: 0.5 mg IM (1:1,000 原液肌肉注射)\n• 症狀性心搏過緩/休克點滴輸注: 2 - 10 mcg/min (滴速依血壓微調)",
+  route: "靜脈注射 (IV) / 骨內途徑 (IO) / 肌肉注射 (IM)",
+  interval: "• OHCA: 每 3 - 5 分鐘一次\n• 過敏性休克: 必要時每 5 - 15 分鐘可重複肌肉注射 0.5 mg 一次\n• 點滴輸注: 連續性維持點滴",
+  pediatricSpecial: "• OHCA: 0.01 mg/kg (即 1:10,000 稀釋液 0.1 mL/kg) IV/IO，每 3-5 分鐘一次。\n• 過敏性休克: 0.01 mg/kg (1:1,000 原液) IM，單次最大劑量 0.3 mg。\n• 嚴重哮喘/喉炎霧化吸入: 0.5 mL (1:1,000) 加 3 mL 生理食鹽水吸入。",
+  calcProps: {
+
+=== Drug ID: amiodarone ===
+  nameEn: "Amiodarone",
+  nameZh: "臟安 / 胺碘酮",
+  dosage: "• OHCA (VF/pVT): 首劑 300 mg，次劑 150 mg\n• 有脈搏的穩定 VT: 150 mg 慢速滴注",
+  route: "靜脈注射 (IV) / 骨內途徑 (IO)",
+  interval: "• OHCA: 首劑給藥後，若 VF/pVT 持續，間隔 3 - 5 分鐘給予次劑\n• 點滴輸注: 首劑 150 mg 於 10 分鐘內滴完，後續可以 1 mg/min 維持點滴輸注",
+  pediatricSpecial: "• OHCA: 5 mg/kg IV/IO 快速推注（單次最大劑量 300 mg），若 VF/pVT 持續可重複，最大累積劑量 15 mg/kg。\n• 有脈搏穩定 VT/SVT: 5 mg/kg 加入 D5W 中，於 20-60 分鐘內慢速滴注。",
+  calcProps: {
+
+=== Drug ID: adenosine ===
+  nameEn: "Adenosine",
+  nameZh: "腺苷",
+  dosage: "• 首劑: 6 mg (快速推注)\n• 次劑: 12 mg (快速推注)\n• 註：若經由中心靜脈導管 (CVC) 給藥，首劑需減半為 3 mg",
+  route: "快速靜脈注射 (Rapid IV push)",
+  interval: "首劑給藥後 1 - 2 分鐘內若未轉復，給予次劑",
+  pediatricSpecial: "• 首劑: 0.1 mg/kg IV 快速推注（單次最大劑量 6 mg），隨即快速沖水。\n• 次劑: 若未轉復，給予 0.2 mg/kg IV 快速推注（單次最大劑量 12 mg）。",
+  calcProps: {
+
+=== Drug ID: atropine ===
+  nameEn: "Atropine Sulfate",
+  nameZh: "阿托平",
+  dosage: "• 症狀性心搏過緩: 1 mg IV/IO\n• 有機磷/農藥中毒: 起始劑量 1 mg IV，若未改善 5 分鐘後可再給予 1 mg",
+  route: "靜脈注射 (IV) / 骨內注射 (IO)",
+  interval: "• 症狀性心搏過緩: 每 3 - 5 分鐘一次，最大總劑量為 3 mg\n• 有機磷/農藥中毒: 5 分鐘後可考慮重複 1 次 1 mg，若皆無改善應儘速送醫",
+  pediatricSpecial: "• 兒科心搏過緩: 0.02 mg/kg IV/IO。\n• 單次最低劑量 0.1 mg；單次最大劑量：兒童 0.5 mg、青少年 1 mg。\n• 總最大量：兒童 1 mg、青少年 2 mg。",
+  calcProps: {
+
+=== Drug ID: midazolam ===
+  nameEn: "Midazolam",
+  nameZh: "導美康 / 咪達唑侖",
+  dosage: "• 癲癇控制 / 重積狀態: 18歲以上 5 mg；70歲以上 2.5 mg (肌肉注射 IM)\n• 插管前或行動前鎮靜: 1 - 2.5 mg 緩慢注射 (IV/IO)",
+  route: "肌肉注射 (IM) / 靜脈注射 (IV) / 骨內注射 (IO)",
+  interval: "• 癲癇控制 / 重積狀態: 若 5 分鐘後仍持續抽搐，可重複 1 次相同劑量，到院前總劑量上限為 10 mg",
+  pediatricSpecial: "• 癲癇發作: 0.1 - 0.2 mg/kg IM/IN（最大單次 5 mg）或 0.1 mg/kg 緩慢 IV/IO（最大單次 2-4 mg）。",
+  calcProps: {
+
+=== Drug ID: txa ===
+  nameEn: "Tranexamic Acid (TXA)",
+  nameZh: "斷血炎 / 傳明酸",
+  dosage: "• 首劑: 1 g (1000 mg) 靜脈滴注",
+  route: "靜脈滴注 (IV Drip) / 骨內滴注 (IO Drip)",
+  interval: "• 院前通常僅給予首劑一次（後續維持劑量 1 g 於入院後連續輸注 8 小時）",
+  pediatricSpecial: "• 嚴重出血: 15 - 30 mg/kg (最大劑量 1000 mg) 加入生理食鹽水中，於 10 - 20 分鐘內靜脈滴注。",
+  calcProps: {
+
+=== Drug ID: nitroglycerin ===
+  nameEn: "Nitroglycerin (NTG)",
+  nameZh: "硝化甘油",
+  dosage: "• 協助自備含片: 每次含服 1 片 (在無 SBP<90、心率<50或>100、服用壯陽藥等禁忌下協助含服)\n• 點滴輸注: 5 - 10 mcg/min 起始，依血壓微調",
+  route: "舌下含服 (SL) / 靜脈點滴 (IV Drip)",
+  interval: "• 協助自備含片: 每 5 分鐘 1 次，最多 3 次 (每次給藥前必須重新測量血壓，收縮壓需高於 90 mmHg)",
+  pediatricSpecial: "• 兒科院前無使用指引，極少於兒科院前急救中使用。",
+  calcProps: {
+
+=== Drug ID: aspirin ===
+  nameEn: "Aspirin",
+  nameZh: "阿斯匹靈",
+  dosage: "• 常規劑量: 300 mg (疑似急性心肌梗塞 / STEMI 患者，嚼碎口服，需確認無禁忌症且簽署用藥同意書)",
+  route: "口服 (需嚼碎吞服，以利快速吸收)",
+  interval: "單次給藥一次",
+  pediatricSpecial: "• 兒科院前無適應症（禁用，避免誘發兒科雷氏症候群 Reye's Syndrome）。",
+  calcProps: {
+
+=== Drug ID: naloxone ===
+  nameEn: "Naloxone Hydrochloride",
+  nameZh: "納洛酮",
+  dosage: "• 靜脈/肌肉/皮下/鼻腔給藥: 0.4 mg - 2.0 mg\n• 鼻腔吸入 (IN): 2.0 - 4.0 mg",
+  route: "靜脈注射 (IV) / 骨內注射 (IO) / 肌肉注射 (IM) / 皮下注射 (SC) / 鼻腔給藥 (IN)",
+  interval: "每 2 - 3 分鐘可重複給藥一次，直至呼吸速率與潮氣量恢復正常",
+  pediatricSpecial: "• 0.1 mg/kg IV/IO/IM，單次最大 2 mg。若無改善，可每 2-3 分鐘重複一次。",
+  calcProps: {
+
+=== Drug ID: glucose ===
+  nameEn: "Glucose (D50W / D10W)",
+  nameZh: "葡萄糖注射液",
+  dosage: "• D10W: 500 mL 快速滴注 (洗腎或四肢腫脹患者減半為 250 mL)\n• D50W: 40 mL (限高級救護技術員 EMT-P 靜脈推注)\n• 無靜脈管路: 使用糖粉或糖漿塗抹於病患牙齦上，並維持氣道暢通",
+  route: "靜脈注射 (IV) / 塗抹牙齦 (Oral)",
+  interval: "• 靜脈注射/推注: 於送醫途中再次評估生命徵象並予以記錄；送醫途中可重測血糖確認意識恢復狀況",
+  pediatricSpecial: "• 兒科首選 D10W，劑量為 2 - 5 mL/kg 靜脈滴注；新生兒僅可使用 D10W，劑量為 2 mL/kg (禁用 D50W 避免破壞細小血管)；若持續昏迷或重積狀態，兒科可給予 D50W 2 mL/kg。",
+  calcProps: {
+
+=== Drug ID: tramadol ===
+  nameEn: "Tramadol Hydrochloride",
+  nameZh: "曲馬多 / 特美痛",
+  dosage: "• 常規劑量: 50 mg (限年齡 >= 18 歲，以原液肌肉緩慢注射，單次最大劑量 100 mg，每日最大 400 mg)",
+  route: "肌肉注射 (IM，肌肉緩慢注射)",
+  interval: "• 院前通常僅給予首劑 50 mg 一次 (給藥後 10 分鐘應在途中再次評估疼痛程度並記錄)",
+  pediatricSpecial: "• 12 歲以上兒童: 1 - 2 mg/kg IM 肌肉注射，單次最大劑量 100 mg。\n• 12 歲以下兒童: 院前禁用。",
+  calcProps: {
+
+=== Drug ID: fenoterol ===
+  nameEn: "Fenoterol (Berotec)",
+  nameZh: "備勞喘 / 芬諾特羅",
+  dosage: "• 噴霧吸入：1瓶單一劑量 (0.5 mL 或 1.25 mg) 溶於生理食鹽水 (N/S) 至 4 mL 使用吸入器霧化吸入。若無效，間隔 5 分鐘後得使用第二瓶。\n• 自備吸入劑 (MDI)：協助吸入 2 劑 (吸入型短效支氣管擴張劑，Berotec MDI 100mcg/puff)。\n• 法定傳染病：考慮使用吸入型 MDI 2 劑，間隔 1 分鐘，送醫時間超 20 分鐘者每 20 分鐘可重複用藥。",
+  route: "霧化吸入 (Inhalation) / 定量吸入器 (MDI)",
+  interval: "• 霧化：首劑無效，間隔 5 分鐘給予第二劑。\n• MDI：間隔 1 分鐘吸入第二劑；送醫路程長每 20 分鐘重複一次。",
+  pediatricSpecial: "• 兒科急性氣喘發作：霧化吸入劑量，體重 < 22kg (約6歲以下) 每次給予 0.5 mL (1.25 mg) ；體重 >= 22kg 每次給予 1.0 mL (2.5 mg) 稀釋至 4 mL 霧化吸入。\n• MDI 協助：兒童依醫囑或協助吸入 1-2 劑，需配合吸藥輔助器 (Spacer) 使用最佳。",
+  calcProps: {
+

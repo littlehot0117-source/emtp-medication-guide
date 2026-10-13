@@ -240,6 +240,10 @@ body {
   font-weight: 600;
 }
 
+.mobile-actions {
+  display: none;
+}
+
 /* Search Bar in Top Bar */
 .search-container {
   position: relative;

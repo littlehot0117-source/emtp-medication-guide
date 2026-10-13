@@ -32,8 +32,8 @@ const EMTP_DRUGS = [
     dosage: "• OHCA: 1 mg IV/IO\n• 過敏性休克: 0.5 mg IM (1:1,000 原液肌肉注射)\n• 症狀性心搏過緩/休克點滴輸注: 2 - 10 mcg/min (滴速依血壓微調)",
     route: "靜脈注射 (IV) / 骨內途徑 (IO) / 肌肉注射 (IM)",
     interval: "• OHCA: 每 3 - 5 分鐘一次\n• 過敏性休克: 必要時每 5 - 15 分鐘可重複肌肉注射 0.5 mg 一次\n• 點滴輸注: 連續性維持點滴",
-    pediatricSpecial: "• OHCA: 0.01 mg/kg (即 1:10,000 稀釋液 0.1 mL/kg) IV/IO，每 3-5 分鐘一次。\n• 過敏性休克: 0.01 mg/kg (1:1,000 原液) IM，單次最大劑量 0.3 mg。\n• 嚴重哮喘/喉炎霧化吸入: 0.5 mL (1:1,000) 加 3 mL 生理食鹽水吸入。",
-    preparation: "• 靜脈推注 (1:10,000): 取 Epinephrine 1 mg (1 mL) 加入 9 mL 生理食鹽水 (NS) 稀釋至 10 mL。\n• 點滴輸注: 將 Epinephrine 1 mg 放入 250 mL D5W 或 NS 中（濃度為 4 mcg/mL）。",
+    pediatricSpecial: "• OHCA / 心搏停止: 0.01 mg/kg (即 1:10,000 稀釋液 0.1 mL/kg) IV/IO，每 3-5 分鐘一次，單次最大劑量 1 mg (10 mL)。\n• 過敏性休克 (Anaphylaxis IM): 0.01 mg/kg (1:1,000 原液 0.01 mL/kg) 肌肉注射於大腿前外側；最新 APLS 年齡階梯劑量：<6個月 100-150 mcg (0.1-0.15 mL)、6個月-6歲 150 mcg (0.15 mL)、6-12歲 300 mcg (0.3 mL)、>12歲 500 mcg (0.5 mL)，必要時每 5-15 分鐘可重複。\n• 嚴重哮吼 (Croup) / 喉頭水腫霧化吸入: 1:1,000 原液 0.5 mL/kg (最大單次劑量 5 mL 原液不稀釋) 經由高流量氧氣霧化吸入。\n• 症狀性心搏過緩: 0.01 mg/kg (1:10,000 稀釋液 0.1 mL/kg) IV/IO (給氧通氣無效時)。",
+    preparation: "• 靜脈推注 (1:10,000): 取 Epinephrine 1 mg (1 mL) 加入 9 mL 生理食鹽水 (NS) 稀釋至 10 mL (濃度 0.1 mg/mL)。\n• 肌肉注射 (1:1,000): 直接使用 1 mg/1 mL 原液抽取肌注，切勿誤以 1:1,000 直推靜脈。\n• 點滴輸注: 將 Epinephrine 1 mg 放入 250 mL D5W 或 NS 中（濃度為 4 mcg/mL）。",
     precautions: [
       "應儘量由粗大靜脈或骨內途徑 (IO) 給藥，避免外漏導致組織壞死。",
       "鹼性藥物（如 NaHCO3）會使 Epinephrine 去活性，切勿在同一管路中同時輸注。"
@@ -45,6 +45,10 @@ const EMTP_DRUGS = [
       standardVolMl: 250,
       pediatricOhcaDosePerKg: 0.01,
       pediatricOhcaVolPerKg: 0.1,
+      pediatricAnaphylaxisDosePerKg: 0.01,
+      pediatricAnaphylaxisVolPerKg: 0.01,
+      maxPediatricOhcaDose: 1.0,
+      maxPediatricAnaphylaxisDose: 0.5,
       infusionUnit: "mcg/min",
       defaultInfusionRate: 5
     }
@@ -70,7 +74,7 @@ const EMTP_DRUGS = [
     dosage: "• OHCA (VF/pVT): 首劑 300 mg，次劑 150 mg\n• 有脈搏的穩定 VT: 150 mg 慢速滴注",
     route: "靜脈注射 (IV) / 骨內途徑 (IO)",
     interval: "• OHCA: 首劑給藥後，若 VF/pVT 持續，間隔 3 - 5 分鐘給予次劑\n• 點滴輸注: 首劑 150 mg 於 10 分鐘內滴完，後續可以 1 mg/min 維持點滴輸注",
-    pediatricSpecial: "• OHCA: 5 mg/kg IV/IO 快速推注（單次最大劑量 300 mg），若 VF/pVT 持續可重複，最大累積劑量 15 mg/kg。\n• 有脈搏穩定 VT/SVT: 5 mg/kg 加入 D5W 中，於 20-60 分鐘內慢速滴注。",
+    pediatricSpecial: "• 頑固性 VF/pVT (OHCA): 5 mg/kg IV/IO 快速推注（單次最大劑量 300 mg），於第 3 次及第 5 次去顫電擊後給予；最大累積劑量 15 mg/kg。推注後需以生理食鹽水或 D5W 充分沖管。\n• 有脈搏穩定 VT/SVT: 5 mg/kg 加入 D5W 中，於 20-60 分鐘內慢速滴注（嚴禁快速推注以防低血壓及心因性休克）。",
     preparation: "• 快速推注：直接以原液注射或以 D5W 稀釋至 20-30 mL 注射。\n• 滴注：Amiodarone 150 mg (3 mL) 加入 100 mL D5W（注意：稀釋液僅限用 D5W，不可與 NS 混合）。",
     precautions: [
       "快速注射可能引發嚴重的低血壓及心搏過緩，在有脈搏患者身上必須慢速滴注至少 10 分鐘。",
@@ -103,8 +107,8 @@ const EMTP_DRUGS = [
     dosage: "• 首劑: 6 mg (快速推注)\n• 次劑: 12 mg (快速推注)\n• 註：若經由中心靜脈導管 (CVC) 給藥，首劑需減半為 3 mg",
     route: "快速靜脈注射 (Rapid IV push)",
     interval: "首劑給藥後 1 - 2 分鐘內若未轉復，給予次劑",
-    pediatricSpecial: "• 首劑: 0.1 mg/kg IV 快速推注（單次最大劑量 6 mg），隨即快速沖水。\n• 次劑: 若未轉復，給予 0.2 mg/kg IV 快速推注（單次最大劑量 12 mg）。",
-    preparation: "• 原液直接快速推注，給藥時必須選擇「最靠近心臟之近端靜脈管路」，並使用雙向三路接頭 (Three-way stopcock) 聯動生理食鹽水快速沖洗 (20 mL)。",
+    pediatricSpecial: "• 新生兒 (< 1 個月): 首劑 0.15 mg/kg (150 mcg/kg) 快速推注。\n• 嬰幼兒及兒童 SVT: 首劑 0.1 mg/kg (100 mcg/kg) 快速推注（單次最大 6 mg）；次劑 0.2 mg/kg (200 mcg/kg) 快速推注（單次最大 12 mg）；第三劑 (若仍未轉復) 0.3 mg/kg（單次最大 12 mg）。\n• 沖洗技術: 必須由最靠近心臟之近端靜脈以雙針筒或三向活栓快速彈射推注，隨即以 5 - 10 mL 生理食鹽水快速沖洗，全程連續心電圖監視。",
+    preparation: "• 原液直接快速推注，給藥時必須選擇「最靠近心臟之近端靜脈管路」，並使用雙向三路接頭 (Three-way stopcock) 聯動生理食鹽水快速沖洗 (5 - 10 mL 兒童 / 20 mL 成人)。",
     precautions: [
       "半衰期極短（少於 10 秒），故必須極快速推注與沖水，否則無效。",
       "給藥後心電圖可能出現短暫的心搏停止 (Asystole，通常持續數秒) 或 VPC，應先向患者解釋可能會有一時的胸悶、瀕死感。",
@@ -114,6 +118,7 @@ const EMTP_DRUGS = [
       type: "pediatric_only",
       pediatricFirstDosePerKg: 0.1,
       pediatricSecondDosePerKg: 0.2,
+      pediatricThirdDosePerKg: 0.3,
       mgPerMl: 3,
       maxPediatricDose: 6,
       maxPediatricSecondDose: 12
@@ -138,7 +143,7 @@ const EMTP_DRUGS = [
     dosage: "• 症狀性心搏過緩: 1 mg IV/IO\n• 有機磷/農藥中毒: 起始劑量 1 mg IV，若未改善 5 分鐘後可再給予 1 mg",
     route: "靜脈注射 (IV) / 骨內注射 (IO)",
     interval: "• 症狀性心搏過緩: 每 3 - 5 分鐘一次，最大總劑量為 3 mg\n• 有機磷/農藥中毒: 5 分鐘後可考慮重複 1 次 1 mg，若皆無改善應儘速送醫",
-    pediatricSpecial: "• 兒科心搏過緩: 0.02 mg/kg IV/IO。\n• 單次最低劑量 0.1 mg；單次最大劑量：兒童 0.5 mg、青少年 1 mg。\n• 總最大量：兒童 1 mg、青少年 2 mg。",
+    pediatricSpecial: "• 兒科心搏過緩 (迷走刺激/房室傳導阻滯): 0.02 mg/kg (20 mcg/kg) IV/IO。\n• 單次最低劑量: 0.1 mg (100 mcg)（劑量 < 0.1 mg 易誘發中樞性反常心搏過緩）。\n• 單次最大劑量: 最新 APLS 明確規範兒童為 0.6 mg (600 mcg)，青少年為 1.0 mg。總最大量：兒童 1.0 mg、青少年 2.0 mg。\n• 有機磷農藥中毒解毒: 0.02 - 0.05 mg/kg IV/IO 每 10-20 分鐘重複，直至氣道分泌物乾燥。\n• 臨床警訊: 兒科心搏過緩絕大多數為缺氧引起，首要治療為暢通呼吸道、高濃度給氧與袋瓣罩正壓通氣，不可本末倒置延誤通氣。",
     preparation: "• 原液直接 IV 推注。成人規格通常為 1 mL 裝 (1 mg/mL 或 0.5 mg/mL)。",
     precautions: [
       "靜脈注射劑量若小於 0.5 mg（成人）或 0.1 mg（兒童），可能引發反射性心搏過緩（中樞性迷走刺激效果）。",
@@ -148,7 +153,7 @@ const EMTP_DRUGS = [
       type: "pediatric_only",
       pediatricOhcaDosePerKg: 0.02,
       minPediatricDose: 0.1,
-      maxPediatricDose: 0.5,
+      maxPediatricDose: 0.6,
       mgPerMl: 1
     }
   },
@@ -173,7 +178,7 @@ const EMTP_DRUGS = [
     dosage: "• 癲癇控制 / 重積狀態: 18歲以上 5 mg；70歲以上 2.5 mg (肌肉注射 IM)\n• 插管前或行動前鎮靜: 1 - 2.5 mg 緩慢注射 (IV/IO)",
     route: "肌肉注射 (IM) / 靜脈注射 (IV) / 骨內注射 (IO)",
     interval: "• 癲癇控制 / 重積狀態: 若 5 分鐘後仍持續抽搐，可重複 1 次相同劑量，到院前總劑量上限為 10 mg",
-    pediatricSpecial: "• 癲癇發作: 0.1 - 0.2 mg/kg IM/IN（最大單次 5 mg）或 0.1 mg/kg 緩慢 IV/IO（最大單次 2-4 mg）。",
+    pediatricSpecial: "• 最新 APLS 兒童癲癇重積狀態 (Status Epilepticus) 第一線給藥：\n  - 經鼻給藥 (IN, Intranasal) / 口頰黏膜 (Buccal): 0.2 mg/kg (單次最大劑量 10 mg)。\n  - 靜脈注射 (IV) / 骨內 (IO): 0.1 mg/kg 緩慢注射超過 2 分鐘 (單次最大劑量 4 - 5 mg)。\n  - 肌肉注射 (IM): 0.15 - 0.2 mg/kg (單次最大劑量 5 - 10 mg)。\n• 若 5-10 分鐘後抽搐持續，得重複給藥 1 次。給藥後必須嚴密監視呼吸抑制、SpO2 與血壓。",
     preparation: "• 常見規格為 5 mg / 1 mL 或 15 mg / 3 mL。靜脈注射建議稀釋（如 5 mg 稀釋至 5 mL 或 10 mL）以便微量滴定。",
     precautions: [
       "對老年人或合併使用鎮痛藥者，呼吸抑制與低血壓的風險會成倍增加，劑量需減半並極緩慢注射。",
@@ -184,7 +189,11 @@ const EMTP_DRUGS = [
       mgPerMl: 5,
       standardDosePerKg: 0.1,
       doseUnit: "mg/kg",
-      maxSingleDose: 5
+      maxSingleDose: 5,
+      pediatricIvDosePerKg: 0.1,
+      pediatricInDosePerKg: 0.2,
+      maxPediatricIvDose: 5,
+      maxPediatricInDose: 10
     }
   },
   {
@@ -206,7 +215,7 @@ const EMTP_DRUGS = [
     dosage: "• 首劑: 1 g (1000 mg) 靜脈滴注",
     route: "靜脈滴注 (IV Drip) / 骨內滴注 (IO Drip)",
     interval: "• 院前通常僅給予首劑一次（後續維持劑量 1 g 於入院後連續輸注 8 小時）",
-    pediatricSpecial: "• 嚴重出血: 15 - 30 mg/kg (最大劑量 1000 mg) 加入生理食鹽水中，於 10 - 20 分鐘內靜脈滴注。",
+    pediatricSpecial: "• 兒科重大外傷大出血 / 出血性休克 (傷後 3 小時內): 負荷劑量 15 mg/kg (最新 APLS 15 - 20 mg/kg，最大單次 1,000 mg) 加入生理食鹽水中，於 10 - 20 分鐘內慢速滴注完畢。切忌快速推注以防低血壓。\n• 醫院後續維持劑量: 2 mg/kg/hr 持續輸注 8 小時。",
     preparation: "• 常見規格為 250 mg/5 mL 或 500 mg/5 mL。取 1 g (如 500 mg 規格兩支共 10 mL) 直接注入 100 mL 生理食鹽水袋中，於 10 分鐘內滴完。",
     precautions: [
       "靜脈推注速度過快可能引發暫時性低血壓。必須控制在 10 分鐘內緩慢滴完，切忌快速推注。",
@@ -302,7 +311,7 @@ const EMTP_DRUGS = [
     dosage: "• 靜脈/肌肉/皮下/鼻腔給藥: 0.4 mg - 2.0 mg\n• 鼻腔吸入 (IN): 2.0 - 4.0 mg",
     route: "靜脈注射 (IV) / 骨內注射 (IO) / 肌肉注射 (IM) / 皮下注射 (SC) / 鼻腔給藥 (IN)",
     interval: "每 2 - 3 分鐘可重複給藥一次，直至呼吸速率與潮氣量恢復正常",
-    pediatricSpecial: "• 0.1 mg/kg IV/IO/IM，單次最大 2 mg。若無改善，可每 2-3 分鐘重複一次。",
+    pediatricSpecial: "• 兒科阿片類中毒併呼吸抑制：\n  - 完全反轉 (呼吸停止/昏迷): 0.1 mg/kg (100 mcg/kg) IV/IO/IM/SC，單次最大劑量 2 mg，每 2-3 分鐘可重複。\n  - 滴定反轉 (保留止痛僅恢復自主呼吸): 0.01 mg/kg (10 mcg/kg) IV 緩慢滴定。\n  - 兒童年齡 >= 5 歲或體重 > 20 kg: 可直接給予單次固定劑量 2 mg。\n• 最新 APLS 7th ed 安全警訊: 給藥前必須先給氧與建立正壓通氣；成癮母親之新生兒給藥可能誘發急性戒斷性抽搐，需格外謹慎。",
     preparation: "• 常見規格為 0.4 mg / 1 mL 針劑。靜脈注射可直接推注或以 NS 稀釋至 10 mL 以便微量滴定（避免誘發嚴重的戒斷症狀）。",
     precautions: [
       "對長期藥物成癮者，快速逆轉可能誘發嚴重的「急性戒斷症候群」，表現為極度躁動、口乾、高血壓、反射性心律不整甚至肺水腫，因此建議小劑量滴定給藥至呼吸改善即可。",
@@ -333,17 +342,17 @@ const EMTP_DRUGS = [
     dosage: "• D10W: 500 mL 快速滴注 (洗腎或四肢腫脹患者減半為 250 mL)\n• D50W: 40 mL (限高級救護技術員 EMT-P 靜脈推注)\n• 無靜脈管路: 使用糖粉或糖漿塗抹於病患牙齦上，並維持氣道暢通",
     route: "靜脈注射 (IV) / 塗抹牙齦 (Oral)",
     interval: "• 靜脈注射/推注: 於送醫途中再次評估生命徵象並予以記錄；送醫途中可重測血糖確認意識恢復狀況",
-    pediatricSpecial: "• 兒科首選 D10W，劑量為 2 - 5 mL/kg 靜脈滴注；新生兒僅可使用 D10W，劑量為 2 mL/kg (禁用 D50W 避免破壞細小血管)；若持續昏迷或重積狀態，兒科可給予 D50W 2 mL/kg。",
+    pediatricSpecial: "• 最新 APLS 兒科低血糖急救 (血糖值 < 60 mg/dL)：\n  - 嚴格限用 D10W (10% 葡萄糖)！禁用高濃度 D50W 或 D25W（避免破壞脆弱血管、高滲透壓腦損傷及反彈性高血糖）。\n  - 劑量: 2 - 5 mL/kg D10W 靜脈推注/滴注 (相當於 0.2 - 0.5 g/kg)。\n  - 建議起始推注: 2 mL/kg D10W 快速推注 (單次最大 250 mL 即 25 g 葡萄糖)。\n  - 新生兒: 2 mL/kg D10W 緩慢推注。\n  - 給藥後 10-15 分鐘重測血糖，若持續昏迷低血糖得重複給予 2-5 mL/kg D10W 並維持點滴輸注。",
     preparation: "• D50W 通常為 20 mL/支 (10g) 或 50 mL/支。必須確保靜脈管路完全在血管內，否則外漏會造成嚴重皮下組織壞死。\n• 若手邊僅有 D50W 但需用於兒科，可以 1 mL D50W 混合 4 mL 生理食鹽水 (NS) 稀釋成 D10W 使用。",
     precautions: [
       "給藥前必須 100% 確認靜脈管路通暢，推注過程中需反覆抽吸確認有回血。",
       "給藥後應在 10-15 分鐘後重新測量血糖，並評估患者意識狀態是否有改善。"
     ],
     calcProps: {
-      type: "pediatric_only",
-      pediatricOhcaDosePerKg: 5,
-      mgPerMl: 0.1,
-      maxPediatricDose: 250
+      type: "pediatric_glucose",
+      pediatricD10WMinPerKg: 2,
+      pediatricD10WMaxPerKg: 5,
+      maxPediatricVol: 250
     }
   },
   {
@@ -368,7 +377,7 @@ const EMTP_DRUGS = [
     dosage: "• 常規劑量: 50 mg (限年齡 >= 18 歲，以原液肌肉緩慢注射，單次最大劑量 100 mg，每日最大 400 mg)",
     route: "肌肉注射 (IM，肌肉緩慢注射)",
     interval: "• 院前通常僅給予首劑 50 mg 一次 (給藥後 10 分鐘應在途中再次評估疼痛程度並記錄)",
-    pediatricSpecial: "• 12 歲以上兒童: 1 - 2 mg/kg IM 肌肉注射，單次最大劑量 100 mg。\n• 12 歲以下兒童: 院前禁用。",
+    pediatricSpecial: "• 最新兒科安全警示 (國際黑框警告)：\n  - 12 歲以下兒童嚴格禁用（因 CYP2D6 超快代謝基因型可能引發無法預測的致命性呼吸抑制）。\n  - 12 - 18 歲進行扁桃腺/腺樣體切除手術後或重度睡眠呼吸中止者禁用。\n  - 12 歲以上青少年無禁忌症時之創傷止痛: 1 mg/kg 原液深部肌肉注射 (IM)，單次最大劑量 50 - 100 mg。\n• 臨床備註: 最新 APLS 建議兒科止痛首選為 Paracetamol (15 mg/kg)、Ibuprofen (10 mg/kg) 或 Morphine (0.1 mg/kg IV) / Fentanyl (1 mcg/kg IN)。",
     preparation: "• 常見規格為 100 mg / 2 mL 安瓿。不需稀釋，直接以原液行深部肌肉注射 (IM)。",
     precautions: [
       "本系統協定院前僅限肌肉注射 (IM) 給藥。靜脈注射 (IV) 易引發嚴重的噁心、嘔吐與頭暈，甚至引發短暫低血壓，故本救護常規不予採用。",
@@ -378,7 +387,7 @@ const EMTP_DRUGS = [
     calcProps: {
       type: "weight_bolus",
       mgPerMl: 50,
-      standardDosePerKg: 1.5,
+      standardDosePerKg: 1.0,
       doseUnit: "mg/kg",
       maxSingleDose: 100
     }
@@ -402,7 +411,7 @@ const EMTP_DRUGS = [
     dosage: "• 噴霧吸入：1瓶單一劑量 (0.5 mL 或 1.25 mg) 溶於生理食鹽水 (N/S) 至 4 mL 使用吸入器霧化吸入。若無效，間隔 5 分鐘後得使用第二瓶。\n• 自備吸入劑 (MDI)：協助吸入 2 劑 (吸入型短效支氣管擴張劑，Berotec MDI 100mcg/puff)。\n• 法定傳染病：考慮使用吸入型 MDI 2 劑，間隔 1 分鐘，送醫時間超 20 分鐘者每 20 分鐘可重複用藥。",
     route: "霧化吸入 (Inhalation) / 定量吸入器 (MDI)",
     interval: "• 霧化：首劑無效，間隔 5 分鐘給予第二劑。\n• MDI：間隔 1 分鐘吸入第二劑；送醫路程長每 20 分鐘重複一次。",
-    pediatricSpecial: "• 兒科急性氣喘發作：霧化吸入劑量，體重 < 22kg (約6歲以下) 每次給予 0.5 mL (1.25 mg) ；體重 >= 22kg 每次給予 1.0 mL (2.5 mg) 稀釋至 4 mL 霧化吸入。\n• MDI 協助：兒童依醫囑或協助吸入 1-2 劑，需配合吸藥輔助器 (Spacer) 使用最佳。",
+    pediatricSpecial: "• 兒科急性氣喘發作 (支氣管痙攣)：\n  - 霧化吸入 (以高流量氧氣 6-8 L/min 驅動): 體重 < 22 kg (< 6 歲) 給予 0.5 mL (1.25 mg)；體重 >= 22 kg (>= 6 歲) 給予 1.0 mL (2.5 mg) 加入生理食鹽水至 4 mL 霧化吸入。必要時每 20-30 分鐘可重複。\n  - 定量吸入劑 (MDI 搭配 Spacer 輔助吸藥艙): < 6 歲每次 2 - 6 劑 (每劑吸入後正常潮氣呼吸 4-5 次)；>= 6 歲每次 4 - 12 劑。\n• 最新 APLS 禁忌/警戒: 嬰幼兒心率 > 180-200 bpm 或兒童心率 > 150 bpm 時需審慎評估，嚴防誘發致命性心律不整。",
     preparation: "• 霧化：取備勞喘單一劑量吸入液 1 瓶（0.5 mL 內含 1.25 mg 活性成分），加入滅菌生理食鹽水 (NS) 稀釋至 4 mL，置於霧化器杯中吸入。\n• MDI：取下定量吸入器蓋子，搖勻後接上輔助器或對準口部，於吸氣開始時壓下閥門，並憋氣 10 秒以利吸收。",
     precautions: [
       "吸入後可能產生心悸、手部細微顫動、頭痛、噁心等 Beta-2 興奮劑常見副作用。",

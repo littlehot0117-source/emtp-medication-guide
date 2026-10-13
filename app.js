@@ -617,12 +617,22 @@ const app = {
       this.calculateDosage();
     });
 
-    // 兒科年齡選擇聯動體重
+    // 兒科年齡選擇聯動體重 (依據最新 APLS 階梯公式)
     pedAgeSelect.addEventListener("change", (e) => {
-      const age = parseInt(e.target.value);
-      if (age) {
-        // APLS公式: Weight = (Age * 2) + 8
-        const estimatedWeight = (age * 2) + 8;
+      const ageVal = parseFloat(e.target.value);
+      if (!isNaN(ageVal)) {
+        let estimatedWeight = 10;
+        if (ageVal < 1) {
+          // 嬰兒月齡公式 (< 1 歲): 0.5 × 月齡 + 4
+          const months = Math.round(ageVal * 12);
+          estimatedWeight = Number(((months * 0.5) + 4).toFixed(1));
+        } else if (ageVal <= 5) {
+          // 幼童 (1 - 5 歲): 2 × 年齡 + 8
+          estimatedWeight = Math.round((ageVal * 2) + 8);
+        } else {
+          // 學齡兒童 (6 - 12 歲, 最新 APLS 採納 Luscombe & Owens 公式): 3 × 年齡 + 7
+          estimatedWeight = Math.round((ageVal * 3) + 7);
+        }
         weightInput.value = estimatedWeight;
         this.calculateDosage();
       }
@@ -718,43 +728,99 @@ const app = {
 
     // 計算主體
     if (isPediatric) {
-      // ===== 兒科計算分支 =====
-      if (props.pediatricOhcaDosePerKg) {
-        let calculatedDose = props.pediatricOhcaDosePerKg * weight;
-        let unit = "mg";
-        
-        // 限幅最大兒科劑量
-        if (props.maxPediatricDose && calculatedDose > props.maxPediatricDose) {
-          calculatedDose = props.maxPediatricDose;
-        }
+      // ===== 兒科計算分支 (依據最新 APLS 7th / 6th Edition) =====
+      if (drug.id === "epinephrine") {
+        // Epinephrine: OHCA (IV/IO 1:10,000) 及 過敏性休克 (IM 1:1,000)
+        const ohcaDose = Math.min(weight * 0.01, 1.0);
+        const ohcaVol = Math.min(weight * 0.1, 10.0);
+        const maxImDose = weight >= 35 ? 0.5 : 0.3;
+        const imDose = Math.min(weight * 0.01, maxImDose);
+        const imVol = imDose; // 1:1,000 is 1mg/mL -> vol = dose in mL
 
-        // Epinephrine 特殊處理 (稀釋法體積計算)
-        if (drug.id === "epinephrine") {
-          const calculatedVol = props.pediatricOhcaVolPerKg * weight;
-          targetDoseEl.textContent = `${calculatedDose.toFixed(3)} mg (Epi 1:10,000)`;
-          volumeLabelEl.textContent = "稀釋液抽取容積 (1:10,000)";
-          volumeEl.innerHTML = `${calculatedVol.toFixed(1)} mL <span class="result-badge">原液 1mg 稀釋至 10mL 後抽取</span>`;
+        targetDoseEl.innerHTML = `OHCA: ${ohcaDose.toFixed(3)} mg (0.01 mg/kg)<br>過敏性休克: ${imDose.toFixed(3)} mg (0.01 mg/kg IM)`;
+        volumeLabelEl.textContent = "建議抽取容積 (OHCA 稀釋液 / 過敏原液)";
+        volumeEl.innerHTML = `OHCA (1:10,000): ${ohcaVol.toFixed(1)} mL <span class="result-badge">1mg稀釋至10mL後抽取</span><br>過敏休克 (1:1,000): ${imVol.toFixed(2)} mL <span class="result-badge">大腿前外側 IM</span>`;
+      }
+      else if (drug.id === "amiodarone") {
+        // Amiodarone: 5 mg/kg (單次最大 300 mg)
+        const dose = Math.min(weight * 5, 300);
+        const vol = dose / 50; // 原液 50 mg/mL
+        targetDoseEl.textContent = `${dose.toFixed(1)} mg (5 mg/kg，單次上限 300 mg)`;
+        volumeLabelEl.textContent = "建議抽取注射容積";
+        volumeEl.innerHTML = `${vol.toFixed(1)} mL <span class="result-badge">第3/5次去顫後快推沖管</span>`;
+      }
+      else if (drug.id === "adenosine") {
+        // Adenosine: 首劑 0.1 mg/kg (max 6 mg), 次劑 0.2 mg/kg (max 12 mg)
+        const fd = Math.min(weight * 0.1, 6.0);
+        const sd = Math.min(weight * 0.2, 12.0);
+        targetDoseEl.innerHTML = `首劑: ${fd.toFixed(2)} mg (0.1 mg/kg)<br>次劑: ${sd.toFixed(2)} mg (0.2 mg/kg)`;
+        volumeLabelEl.textContent = "注射容積 (原液 3 mg/mL)";
+        volumeEl.innerHTML = `${(fd/3).toFixed(1)} mL / ${(sd/3).toFixed(1)} mL <span class="result-badge">近端快速推注隨即沖水 5-10 mL</span>`;
+      }
+      else if (drug.id === "atropine") {
+        // Atropine: 0.02 mg/kg (最低 0.1 mg, 兒童上限 0.6 mg)
+        let dose = weight * 0.02;
+        if (dose < 0.1) dose = 0.1;
+        if (dose > 0.6) dose = 0.6;
+        targetDoseEl.textContent = `${dose.toFixed(2)} mg (0.02 mg/kg，最低 0.1 mg，兒童上限 0.6 mg)`;
+        volumeLabelEl.textContent = "建議抽取注射容積 (原液 1 mg/mL)";
+        volumeEl.innerHTML = `${dose.toFixed(2)} mL <span class="result-badge">靜脈推注 (原液 1 mg/mL)</span>`;
+      }
+      else if (drug.id === "midazolam") {
+        // Midazolam: 經鼻/口頰 0.2 mg/kg (max 10 mg), 靜脈 0.1 mg/kg (max 5 mg)
+        const inDose = Math.min(weight * 0.2, 10.0);
+        const ivDose = Math.min(weight * 0.1, 5.0);
+        targetDoseEl.innerHTML = `經鼻(IN)/肌注: ${inDose.toFixed(2)} mg (0.2 mg/kg)<br>靜脈(IV)/骨內: ${ivDose.toFixed(2)} mg (0.1 mg/kg)`;
+        volumeLabelEl.textContent = "注射容積 (原液 5 mg/mL)";
+        volumeEl.innerHTML = `IN/IM (0.2 mg/kg): ${(inDose/5).toFixed(2)} mL<br>IV (0.1 mg/kg): ${(ivDose/5).toFixed(2)} mL <span class="result-badge">緩推 > 2分鐘</span>`;
+      }
+      else if (drug.id === "glucose") {
+        // Glucose: 嚴格限用 D10W, 2 - 5 mL/kg (max 250 mL)
+        const minVol = Math.min(weight * 2, 250);
+        const maxVol = Math.min(weight * 5, 250);
+        targetDoseEl.textContent = `2 - 5 mL/kg D10W (${(minVol * 0.1).toFixed(1)} - ${(maxVol * 0.1).toFixed(1)} g 葡萄糖)`;
+        volumeLabelEl.textContent = "建議 D10W 快速滴注/推注容積";
+        volumeEl.innerHTML = `${minVol.toFixed(0)} - ${maxVol.toFixed(0)} mL <span class="result-badge">限用 D10W，嚴格禁用 D50W</span>`;
+      }
+      else if (drug.id === "txa") {
+        // TXA: 15 mg/kg (max 1000 mg)
+        const dose = Math.min(weight * 15, 1000);
+        const vol = dose / 100; // 原液 100 mg/mL
+        targetDoseEl.textContent = `${dose.toFixed(0)} mg (15 mg/kg，單次上限 1000 mg)`;
+        volumeLabelEl.textContent = "建議抽取注射容積";
+        volumeEl.innerHTML = `${vol.toFixed(1)} mL (原液) <span class="result-badge">加入生理食鹽水滴注 10-20 分鐘</span>`;
+      }
+      else if (drug.id === "naloxone") {
+        // Naloxone: 0.1 mg/kg (max 2 mg; >= 20kg 可給 2 mg)
+        const dose = weight >= 20 ? 2.0 : Math.min(weight * 0.1, 2.0);
+        const vol = dose / 0.4; // 原液 0.4 mg/mL
+        targetDoseEl.textContent = `${dose.toFixed(2)} mg (${weight >= 20 ? '兒童>=20kg固定劑量' : '0.1 mg/kg'}，單次上限 2 mg)`;
+        volumeLabelEl.textContent = "建議抽取注射容積 (原液 0.4 mg/mL)";
+        volumeEl.innerHTML = `${vol.toFixed(1)} mL <span class="result-badge">IV/IO/IM/IN 原液注射</span>`;
+      }
+      else if (drug.id === "fenoterol") {
+        // Fenoterol: < 22 kg vs >= 22 kg
+        const isUnder22 = weight < 22;
+        targetDoseEl.innerHTML = `${isUnder22 ? '0.5 mL (1.25 mg)' : '1.0 mL (2.5 mg)'} 霧化吸入<br>MDI 輔助艙: ${isUnder22 ? '2 - 6 劑' : '4 - 12 劑'}`;
+        volumeLabelEl.textContent = "霧化吸入配製";
+        volumeEl.innerHTML = `${isUnder22 ? '0.5 mL' : '1.0 mL'} 加 NS 稀釋至 4 mL <span class="result-badge">高流量氧氣 6-8 L/min 驅動</span>`;
+      }
+      else if (drug.id === "tramadol") {
+        if (weight < 35) {
+          targetDoseEl.innerHTML = `<span style="color:var(--color-danger); font-weight:bold;">⚠️ 12 歲以下兒童嚴格禁用</span>`;
+          volumeLabelEl.textContent = "安全警示";
+          volumeEl.innerHTML = `禁用 <span class="result-badge" style="background:var(--color-danger);">呼吸抑制致死黑框警告</span>`;
         } else {
-          // 其他兒科有劑量計算的藥物
-          const mgPerMl = props.mgPerMl || 1;
-          const volMl = calculatedDose / mgPerMl;
-          targetDoseEl.textContent = `${calculatedDose.toFixed(2)} ${unit}`;
-          volumeLabelEl.textContent = "建議抽取注射容積";
-          volumeEl.innerHTML = `${volMl.toFixed(2)} mL <span class="result-badge">原液注射</span>`;
+          const dose = Math.min(weight * 1.0, 100);
+          targetDoseEl.textContent = `${dose.toFixed(0)} mg (1 mg/kg，青少年單次上限 100 mg)`;
+          volumeLabelEl.textContent = "建議深部肌肉注射容積 (原液 50 mg/mL)";
+          volumeEl.innerHTML = `${(dose/50).toFixed(1)} mL <span class="result-badge">僅限深部肌肉注射 (IM)</span>`;
         }
       }
-      else if (props.pediatricFirstDosePerKg) {
-        // Adenosine 兒科
-        const firstDose = props.pediatricFirstDosePerKg * weight;
-        const secondDose = props.pediatricSecondDosePerKg * weight;
-        const mgPerMl = props.mgPerMl;
-        
-        const fd = Math.min(firstDose, props.maxPediatricDose);
-        const sd = Math.min(secondDose, props.maxPediatricSecondDose);
-
-        targetDoseEl.innerHTML = `首劑: ${fd.toFixed(2)} mg<br>次劑: ${sd.toFixed(2)} mg`;
-        volumeLabelEl.textContent = "注射容積 (首劑 / 次劑)";
-        volumeEl.innerHTML = `${(fd/mgPerMl).toFixed(1)} mL / ${(sd/mgPerMl).toFixed(1)} mL <span class="result-badge">近端快速推注後沖水</span>`;
+      else if (drug.id === "aspirin" || drug.id === "nitroglycerin") {
+        targetDoseEl.innerHTML = `<span style="color:var(--color-danger); font-weight:bold;">⚠️ 兒科院前急救嚴格禁用 / 無適應症</span>`;
+        volumeLabelEl.textContent = "安全警示";
+        volumeEl.innerHTML = `禁用 <span class="result-badge" style="background:var(--color-danger);">${drug.id === 'aspirin' ? '避免誘發致命雷氏症候群' : '無兒科適應症'}</span>`;
       }
       else {
         targetDoseEl.textContent = "此藥物無預設兒科計算公式";

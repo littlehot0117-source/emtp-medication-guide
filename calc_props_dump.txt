@@ -1,0 +1,115 @@
+=== epinephrine ===
+{
+      type: "weight_infusion_and_pediatric",
+      concentration: "4 mcg/mL (1mg in 250mL)",
+      standardDoseMcg: 1000,
+      standardVolMl: 250,
+      pediatricOhcaDosePerKg: 0.01,
+      pediatricOhcaVolPerKg: 0.1,
+      infusionUnit: "mcg/min",
+      defaultInfusionRate: 5
+    }
+  }
+
+=== amiodarone ===
+{
+      type: "pediatric_only",
+      pediatricOhcaDosePerKg: 5,
+      mgPerMl: 50,
+      maxPediatricDose: 300
+    }
+  }
+
+=== adenosine ===
+{
+      type: "pediatric_only",
+      pediatricFirstDosePerKg: 0.1,
+      pediatricSecondDosePerKg: 0.2,
+      mgPerMl: 3,
+      maxPediatricDose: 6,
+      maxPediatricSecondDose: 12
+    }
+  }
+
+=== atropine ===
+{
+      type: "pediatric_only",
+      pediatricOhcaDosePerKg: 0.02,
+      minPediatricDose: 0.1,
+      maxPediatricDose: 0.5,
+      mgPerMl: 1
+    }
+  }
+
+=== midazolam ===
+{
+      type: "weight_bolus",
+      mgPerMl: 5,
+      standardDosePerKg: 0.1,
+      doseUnit: "mg/kg",
+      maxSingleDose: 5
+    }
+  }
+
+=== txa ===
+{
+      type: "pediatric_only",
+      pediatricOhcaDosePerKg: 15,
+      mgPerMl: 100,
+      maxPediatricDose: 1000
+    }
+  }
+
+=== nitroglycerin ===
+{
+      type: "weight_infusion",
+      concentration: "200 mcg/mL (50mg in 250mL)",
+      standardDoseMcg: 50000,
+      standardVolMl: 250,
+      infusionUnit: "mcg/min",
+      defaultInfusionRate: 10
+    }
+  }
+
+=== aspirin ===
+{
+      type: "fixed_dose",
+      standardAdultDose: "300 mg 嚼服"
+    }
+  }
+
+=== naloxone ===
+{
+      type: "pediatric_only",
+      pediatricOhcaDosePerKg: 0.1,
+      mgPerMl: 0.4,
+      maxPediatricDose: 2
+    }
+  }
+
+=== glucose ===
+{
+      type: "pediatric_only",
+      pediatricOhcaDosePerKg: 5,
+      mgPerMl: 0.1,
+      maxPediatricDose: 250
+    }
+  }
+
+=== tramadol ===
+{
+      type: "weight_bolus",
+      mgPerMl: 50,
+      standardDosePerKg: 1.5,
+      doseUnit: "mg/kg",
+      maxSingleDose: 100
+    }
+  }
+
+=== fenoterol ===
+{
+      type: "fixed_dose",
+      standardAdultDose: "1 瓶 (0.5 mL) 霧化 / MDI 2 劑"
+    }
+  }
+

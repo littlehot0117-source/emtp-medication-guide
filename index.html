@@ -8,7 +8,7 @@
   <!-- FontAwesome for Premium Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Custom Styling -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=1536">
 </head>
 <body>
 
@@ -68,7 +68,7 @@
         
         <div style="display: flex; align-items: center; gap: 8px;">
           <!-- Mobile accessibility actions -->
-          <div class="mobile-actions" style="display: none; gap: 8px; margin-right: 4px;">
+          <div class="mobile-actions" style="display: flex; gap: 8px; margin-right: 4px;">
             <button class="icon-action-btn" id="mobile-font-size-toggle" title="調整字體大小">
               <i class="fa-solid fa-text-height"></i>
             </button>
@@ -123,19 +123,30 @@
 
               <!-- Age Select (For Pediatric only) -->
               <div class="calc-group" id="pediatric-age-group" style="display: none;">
-                <label for="ped-age">估算兒科年齡</label>
+                <label for="ped-age">估算兒科年齡 (最新 APLS 公式)</label>
                 <select id="ped-age">
                   <option value="">-- 選擇年齡 (自動估算體重) --</option>
-                  <option value="1">1 歲 (約 10 kg)</option>
-                  <option value="2">2 歲 (約 12 kg)</option>
-                  <option value="3">3 歲 (約 14 kg)</option>
-                  <option value="4">4 歲 (約 16 kg)</option>
-                  <option value="5">5 歲 (約 18 kg)</option>
-                  <option value="6">6 歲 (約 20 kg)</option>
-                  <option value="7">7 歲 (約 22 kg)</option>
-                  <option value="8">8 歲 (約 24 kg)</option>
-                  <option value="9">9 歲 (約 26 kg)</option>
-                  <option value="10">10 歲 (約 28 kg)</option>
+                  <optgroup label="嬰兒 (< 1 歲: 0.5×月齡 + 4)">
+                    <option value="0.25">3 個月 (約 5.5 kg)</option>
+                    <option value="0.5">6 個月 (約 7.0 kg)</option>
+                    <option value="0.75">9 個月 (約 8.5 kg)</option>
+                  </optgroup>
+                  <optgroup label="幼童 (1 - 5 歲: 2×年齡 + 8)">
+                    <option value="1">1 歲 (約 10 kg)</option>
+                    <option value="2">2 歲 (約 12 kg)</option>
+                    <option value="3">3 歲 (約 14 kg)</option>
+                    <option value="4">4 歲 (約 16 kg)</option>
+                    <option value="5">5 歲 (約 18 kg)</option>
+                  </optgroup>
+                  <optgroup label="學齡兒童 (6 - 12 歲: 3×年齡 + 7)">
+                    <option value="6">6 歲 (約 25 kg)</option>
+                    <option value="7">7 歲 (約 28 kg)</option>
+                    <option value="8">8 歲 (約 31 kg)</option>
+                    <option value="9">9 歲 (約 34 kg)</option>
+                    <option value="10">10 歲 (約 37 kg)</option>
+                    <option value="11">11 歲 (約 40 kg)</option>
+                    <option value="12">12 歲 (約 43 kg)</option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -484,8 +495,8 @@
   </div>
 
   <!-- Load Medication Database -->
-  <script src="data.js"></script>
+  <script src="data.js?v=1536"></script>
   <!-- Load Main Application Logic -->
-  <script src="app.js"></script>
+  <script src="app.js?v=1536"></script>
 </body>
 </html>
